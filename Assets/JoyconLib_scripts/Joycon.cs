@@ -17,7 +17,7 @@ public class Joycon
         IMU,
         RUMBLE,
     };
-	public DebugType debug_type = DebugType.NONE;
+    public DebugType debug_type = DebugType.NONE;
     public bool isLeft;
     public enum state_ : uint
     {
@@ -52,8 +52,8 @@ public class Joycon
 
     private float[] stick = { 0, 0 };
 
-    private 
-	IntPtr handle;
+    private
+    IntPtr handle;
 
     byte[] default_buf = { 0x0, 0x1, 0x40, 0x40, 0x0, 0x1, 0x40, 0x40 };
 
@@ -72,7 +72,7 @@ public class Joycon
     private Int16[] gyr_r = { 0, 0, 0 };
     private Int16[] gyr_neutral = { 0, 0, 0 };
     private Vector3 gyr_g;
-	private bool do_localize;
+    private bool do_localize;
     private float filterweight;
     private const uint report_len = 49;
     private struct Report
@@ -185,14 +185,14 @@ public class Joycon
     private byte global_count = 0;
     private string debug_str;
 
-	public Joycon(IntPtr handle_, bool imu, bool localize, float alpha, bool left)
+    public Joycon(IntPtr handle_, bool imu, bool localize, float alpha, bool left)
     {
-		handle = handle_;
-		imu_enabled = imu;
-		do_localize = localize;
+        handle = handle_;
+        imu_enabled = imu;
+        do_localize = localize;
         rumble_obj = new Rumble(160, 320, 0);
-		filterweight = alpha;
-		isLeft = left;
+        filterweight = alpha;
+        isLeft = left;
     }
     public void DebugPrint(String s, DebugType d)
     {
@@ -230,13 +230,16 @@ public class Joycon
     {
         Vector3 v1 = new Vector3(j_b.x, i_b.x, k_b.x);
         Vector3 v2 = -(new Vector3(j_b.z, i_b.z, k_b.z));
-        if (v2 != Vector3.zero){
-		    return Quaternion.LookRotation(v1, v2);
-        }else{
+        if (v2 != Vector3.zero)
+        {
+            return Quaternion.LookRotation(v1, v2);
+        }
+        else
+        {
             return Quaternion.identity;
         }
     }
-	public int Attach(byte leds_ = 0x0)
+    public int Attach(byte leds_ = 0x0)
     {
         state = state_.ATTACHED;
         byte[] a = { 0x0 };
@@ -370,13 +373,17 @@ public class Joycon
                 ts_prev = rep.GetTime();
             }
             ProcessButtonsAndStick(report_buf);
-			if (rumble_obj.timed_rumble) {
-				if (rumble_obj.t < 0) {
-					rumble_obj.set_vals (160, 320, 0, 0);
-				} else {
-					rumble_obj.t -= Time.deltaTime;
-				}
-			}
+            if (rumble_obj.timed_rumble)
+            {
+                if (rumble_obj.t < 0)
+                {
+                    rumble_obj.set_vals(160, 320, 0, 0);
+                }
+                else
+                {
+                    rumble_obj.t -= Time.deltaTime;
+                }
+            }
         }
     }
     private int ProcessButtonsAndStick(byte[] report_buf)
@@ -442,18 +449,18 @@ public class Joycon
         }
     }
 
-	private float err;
+    private float err;
     public Vector3 i_b, j_b, k_b, k_acc;
-	private Vector3 d_theta;
-	private Vector3 i_b_;
-	private Vector3 w_a, w_g;
+    private Vector3 d_theta;
+    private Vector3 i_b_;
+    private Vector3 w_a, w_g;
     private Quaternion vec;
-	
+
     private int ProcessIMU(byte[] report_buf)
     {
 
-		// Direction Cosine Matrix method
-		// http://www.starlino.com/dcm_tutorial.html
+        // Direction Cosine Matrix method
+        // http://www.starlino.com/dcm_tutorial.html
 
         if (!imu_enabled | state < state_.IMU_DATA_OK)
             return -1;
@@ -467,8 +474,8 @@ public class Joycon
         for (int n = 0; n < 3; ++n)
         {
             ExtractIMUValues(report_buf, n);
-            
-			float dt_sec = 0.005f * dt;
+
+            float dt_sec = 0.005f * dt;
             sum[0] += gyr_g.x * dt_sec;
             sum[1] += gyr_g.y * dt_sec;
             sum[2] += gyr_g.z * dt_sec;
@@ -543,7 +550,7 @@ public class Joycon
     public void SetRumble(float low_freq, float high_freq, float amp, int time = 0)
     {
         if (state <= Joycon.state_.ATTACHED) return;
-		if (rumble_obj.timed_rumble == false || rumble_obj.t < 0)
+        if (rumble_obj.timed_rumble == false || rumble_obj.t < 0)
         {
             rumble_obj = new Rumble(low_freq, high_freq, amp, time);
         }
@@ -585,14 +592,14 @@ public class Joycon
         {
             if (buf_[i] != 0xff)
             {
-                Debug.Log("Using user stick calibration data.");
+                //Debug.Log("Using user stick calibration data.");
                 found = true;
                 break;
             }
         }
         if (!found)
         {
-            Debug.Log("Using factory stick calibration data.");
+            //Debug.Log("Using factory stick calibration data.");
             buf_ = ReadSPI(0x60, (isLeft ? (byte)0x3d : (byte)0x46), 9); // get user calibration data if possible
         }
         stick_cal[isLeft ? 0 : 2] = (UInt16)((buf_[1] << 8) & 0xF00 | buf_[0]); // X Axis Max above center

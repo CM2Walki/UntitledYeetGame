@@ -148,7 +148,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2070708074}
+  - {fileID: 1231550149}
   m_Father: {fileID: 250149503}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -179,7 +179,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 235217414}
+  - {fileID: 2143934613}
   m_Father: {fileID: 195250750}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -345,14 +345,22 @@ MonoBehaviour:
   accel: {x: 0, y: 0, z: 0}
   jc_ind: 0
   orientation: {x: 0, y: 0, z: 0, w: 0}
-  goingDown: 0
-  goingUp: 0
   descentSpeed: 6
   ascentSpeed: 12
   sensitivity: 200
   MaxDescentPosition: -3.5
   OriginalYPosition: 0
   material: {fileID: 2100000, guid: 4fd71ebf292b2a947b2195264c5e03f8, type: 2}
+  holdingSomethingYeetable: 1
+  yeetingPower: 0
+  yeetRotMin: 10
+  yeetRotMax: -15
+  yeetDirectio: 0
+  yeetingContrainerTransform: {fileID: 2143934613}
+  yeetingRotationMaxTime: 0.1
+  yeetingRotationTimer: 0
+  ourPosition: {fileID: 2143934613}
+  opponentPosition: {fileID: 1231550149}
 --- !u!1 &235217409
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,10 +434,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235217409}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 1.37, y: 4.3, z: 0}
+  m_LocalPosition: {x: 0.13000011, y: -2.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 131422202}
+  m_Father: {fileID: 2143934613}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
 --- !u!1 &250149498
@@ -471,14 +479,22 @@ MonoBehaviour:
   accel: {x: 0, y: 0, z: 0}
   jc_ind: 1
   orientation: {x: 0, y: 0, z: 0, w: 0}
-  goingDown: 0
-  goingUp: 0
   descentSpeed: 6
   ascentSpeed: 12
   sensitivity: 200
   MaxDescentPosition: -3.5
   OriginalYPosition: 0
   material: {fileID: 2100000, guid: c4ababfbc66164d47ab83e454a38f1eb, type: 2}
+  holdingSomethingYeetable: 1
+  yeetingPower: 0
+  yeetRotMin: 10
+  yeetRotMax: -15
+  yeetDirectio: 0
+  yeetingContrainerTransform: {fileID: 1231550149}
+  yeetingRotationMaxTime: 0.1
+  yeetingRotationTimer: 0
+  ourPosition: {fileID: 1231550149}
+  opponentPosition: {fileID: 2143934613}
 --- !u!23 &250149500
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1085,6 +1101,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &1231550148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1231550149}
+  m_Layer: 0
+  m_Name: YeetContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1231550149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231550148}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3800001, y: 6.92, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2070708074}
+  m_Father: {fileID: 86696257}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1588342558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617222513}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 9.1, z: -1}
+  m_LocalPosition: {x: 1.48, y: 9.1, z: -1}
   m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 195250750}
@@ -1453,11 +1500,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070708073}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: -1.38, y: 4.3, z: 0}
+  m_LocalRotation: {x: 0.00000019861236, y: -0.7071068, z: 0.7071068, w: 0.00000019861236}
+  m_LocalPosition: {x: 0, y: -2.6200004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 86696257}
+  m_Father: {fileID: 1231550149}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
 --- !u!23 &2070708076
@@ -1507,6 +1554,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070708073}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2143934612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2143934613}
+  m_Layer: 0
+  m_Name: YeetContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2143934613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143934612}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.2399998, y: 7.09, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 235217414}
+  m_Father: {fileID: 131422202}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3349151903720219058
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,9 +22,7 @@ public class JoyconDemo : MonoBehaviour
     public Vector3 accel;
     public int jc_ind = 0;
     public Quaternion orientation;
-
-    public bool goingDown;
-    public bool goingUp;
+    
     public float descentSpeed = 0.05f;
     public float ascentSpeed = 0.15f;
 
@@ -38,7 +36,18 @@ public class JoyconDemo : MonoBehaviour
 
     public bool holdingSomethingYeetable = true;
     public float yeetingPower = 0f;
-    public float yeetRumbleDuration;
+
+    public float yeetRotMin;
+    public float yeetRotMax;
+    public bool yeetDirectio;
+
+    public Transform yeetingContrainerTransform;
+    public float yeetingRotationMaxTime;
+    public float yeetingRotationTimer;
+
+    public Transform ourPosition;
+    public Transform opponentPosition;
+
     void Start()
     {
         transform = gameObject.transform;
@@ -127,41 +136,35 @@ public class JoyconDemo : MonoBehaviour
 
             ClampPosition(ref position);
 
-            if (handState == HandState.Idle && j.GetButtonDown(Joycon.Button.SHOULDER_1))
+            if (handState == HandState.Idle)
             {
-                handState = HandState.GoingDown;
-            }
-
-            if (handState == HandState.Idle && holdingSomethingYeetable)
-            {
-                if (j.GetButton(Joycon.Button.SHOULDER_2))
+                if (j.GetButtonDown(Joycon.Button.SHOULDER_1))
                 {
-                    yeetingPower += (oldAccel - accel).magnitude;
-
-                    yeetRumbleDuration += Time.deltaTime;
-                    //if (yeetRumbleDuration >= 0.1f)
+                    handState = HandState.GoingDown;
+                }
+                else if (holdingSomethingYeetable)
+                {
+                    if (j.GetButton(Joycon.Button.SHOULDER_2))
                     {
+                        yeetingPower += (oldAccel - accel).magnitude;
+
                         var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
                         var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
                         var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
-
                         j.SetRumble(yoteMin, yoteMax, 0.6f);
-
-                        yeetRumbleDuration = 0f;
                     }
-                }
-                else if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && yeetingPower > 0)
-                {
-                    Debug.LogFormat("Yoting {0}", yeetingPower);
-                    handState = HandState.Yeeting;
+                    else if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && yeetingPower >= 25)
+                    {
+                        //Debug.LogFormat("Yoting {0}", yeetingPower);
+                        handState = HandState.Yeeting;
 
-                    var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
-                    var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
-                    var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
-                    j.SetRumble(yoteMin, yoteMax, 0.6f, 200);
-                    yeetRumbleDuration = 0f;
+                        var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
+                        var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
+                        var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
+                        j.SetRumble(yoteMin, yoteMax, 0.6f, 200);
 
-                    yeetingPower = 0;
+                        yeetingPower = 0;
+                    }
                 }
             }
 
@@ -169,8 +172,8 @@ public class JoyconDemo : MonoBehaviour
             {
                 position.y -= descentSpeed * Time.deltaTime;
                 var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
-                materialOffset.y = Mathf.Lerp(0f, -0.5f, positionTraveled);
-                Debug.LogFormat("GoingDown: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
+                materialOffset.y = GetTextureOffsetModifier(positionTraveled);
+                //Debug.LogFormat("GoingDown: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
                 material.mainTextureOffset = materialOffset;
 
                 if (position.y <= MaxDescentPosition)
@@ -187,8 +190,8 @@ public class JoyconDemo : MonoBehaviour
             {
                 position.y += ascentSpeed * Time.deltaTime;
                 var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
-                materialOffset.y = Mathf.Lerp(0f, -0.5f, positionTraveled);
-                Debug.LogFormat("GoingUp: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
+                materialOffset.y = GetTextureOffsetModifier(positionTraveled);
+                //Debug.LogFormat("GoingUp: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
                 material.mainTextureOffset = materialOffset;
 
                 if (position.y >= OriginalYPosition)
@@ -203,16 +206,28 @@ public class JoyconDemo : MonoBehaviour
             }
             else if (handState == HandState.Yeeting)
             {
-                handState = HandState.Idle;
+                var rotation = yeetingContrainerTransform.rotation;
+                var euler = rotation.eulerAngles;
+                yeetingRotationTimer += Time.deltaTime;
+                var delta = Mathf.Clamp01(yeetingRotationTimer / yeetingRotationMaxTime);
+                euler.y = Mathf.Lerp(yeetRotMin, yeetRotMax, delta);
+                rotation.eulerAngles = euler;
+                yeetingContrainerTransform.rotation = rotation;
+
+                if (delta >= 1)
+                {
+                    handState = HandState.Idle;
+                    yeetingRotationTimer = 0f;
+                }
             }
 
             transform.position = position;
         }
     }
 
-    private float GetTextureOffsetModifier()
+    private float GetTextureOffsetModifier(float positionTraveled)
     {
-        return 1 / (Mathf.Abs(MaxDescentPosition) + Mathf.Abs(OriginalYPosition));
+        return Mathf.Lerp(0f, -0.5f, positionTraveled);
     }
 
     private void DetectObjectCollision()

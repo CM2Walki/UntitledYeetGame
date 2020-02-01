@@ -97,7 +97,8 @@ public class JoyconDemo : MonoBehaviour
             position.z += stick[1] * sensitivity;
 
             ClampPosition(ref position);
-            transform.SetPositionAndRotation(position, orientation);
+
+            transform.position = position;
         }
     }
 

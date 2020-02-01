@@ -32,7 +32,7 @@
 			{
 				fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 				o.Emission = c.rgb;
-				o.Alpha = c.a;
+				o.Alpha = 0;// c.a;
 			}
 			ENDCG
 		}

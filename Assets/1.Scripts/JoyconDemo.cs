@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,7 +9,7 @@ public class JoyconDemo : MonoBehaviour
         Idle,
         GoingDown,
         GoingUp,
-        Yeeting
+        Yeeting,
     }
 
     public List<Joycon> joycons;
@@ -19,6 +18,7 @@ public class JoyconDemo : MonoBehaviour
     // Values made available via Unity
     public float[] stick;
     public Vector3 gyro;
+    private Vector3 oldAccel;
     public Vector3 accel;
     public int jc_ind = 0;
     public Quaternion orientation;
@@ -36,6 +36,9 @@ public class JoyconDemo : MonoBehaviour
     public Material material;
     private Vector2 materialOffset;
 
+    public bool holdingSomethingYeetable = true;
+    public float yeetingPower = 0f;
+    public float yeetRumbleDuration;
     void Start()
     {
         transform = gameObject.transform;
@@ -113,6 +116,7 @@ public class JoyconDemo : MonoBehaviour
             gyro = j.GetGyro();
 
             // Accel values:  x, y, z axis values (in Gs)
+            oldAccel = accel;
             accel = j.GetAccel();
 
             orientation = j.GetVector();
@@ -126,6 +130,39 @@ public class JoyconDemo : MonoBehaviour
             if (handState == HandState.Idle && j.GetButtonDown(Joycon.Button.SHOULDER_1))
             {
                 handState = HandState.GoingDown;
+            }
+
+            if (handState == HandState.Idle && holdingSomethingYeetable)
+            {
+                if (j.GetButton(Joycon.Button.SHOULDER_2))
+                {
+                    yeetingPower += (oldAccel - accel).magnitude;
+
+                    yeetRumbleDuration += Time.deltaTime;
+                    //if (yeetRumbleDuration >= 0.1f)
+                    {
+                        var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
+                        var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
+                        var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
+
+                        j.SetRumble(yoteMin, yoteMax, 0.6f);
+
+                        yeetRumbleDuration = 0f;
+                    }
+                }
+                else if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && yeetingPower > 0)
+                {
+                    Debug.LogFormat("Yoting {0}", yeetingPower);
+                    handState = HandState.Yeeting;
+
+                    var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
+                    var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
+                    var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
+                    j.SetRumble(yoteMin, yoteMax, 0.6f, 200);
+                    yeetRumbleDuration = 0f;
+
+                    yeetingPower = 0;
+                }
             }
 
             if (handState == HandState.GoingDown)
@@ -163,6 +200,10 @@ public class JoyconDemo : MonoBehaviour
                     materialOffset.y = -0.5f;
                     material.mainTextureOffset = materialOffset;
                 }
+            }
+            else if (handState == HandState.Yeeting)
+            {
+                handState = HandState.Idle;
             }
 
             transform.position = position;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class JoyconDemo : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class JoyconDemo : MonoBehaviour
     public int jc_ind = 0;
     public Quaternion orientation;
 
+    private Transform transform;
+
     void Start()
     {
+        transform = gameObject.transform;
         gyro = new Vector3(0, 0, 0);
         accel = new Vector3(0, 0, 0);
 
@@ -86,7 +90,18 @@ public class JoyconDemo : MonoBehaviour
             accel = j.GetAccel();
 
             orientation = j.GetVector();
-            gameObject.transform.rotation = orientation;
+            var position = transform.position;
+            position.x += stick[0];
+            position.z += stick[1];
+
+            ClampPosition(ref position);
+            transform.SetPositionAndRotation(position, orientation);
         }
+    }
+
+    private void ClampPosition(ref Vector3 position)
+    {
+        position.x = Mathf.Clamp(position.x, -13f, 13f);
+        position.z = Mathf.Clamp(position.z, -13f, 13f);
     }
 }

@@ -22,7 +22,7 @@ public class JoyconDemo : MonoBehaviour
     public Vector3 accel;
     public int jc_ind = 0;
     public Quaternion orientation;
-    
+
     public float descentSpeed = 0.05f;
     public float ascentSpeed = 0.15f;
 
@@ -39,7 +39,7 @@ public class JoyconDemo : MonoBehaviour
 
     public float yeetRotMin;
     public float yeetRotMax;
-    public bool yeetDirectio;
+    public bool yeetDirection;
 
     public Transform yeetingContrainerTransform;
     public float yeetingRotationMaxTime;
@@ -153,7 +153,7 @@ public class JoyconDemo : MonoBehaviour
                         var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
                         j.SetRumble(yoteMin, yoteMax, 0.6f);
                     }
-                    else if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && yeetingPower >= 25)
+                    else if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && yeetingPower >= 0)
                     {
                         //Debug.LogFormat("Yoting {0}", yeetingPower);
                         handState = HandState.Yeeting;
@@ -162,6 +162,14 @@ public class JoyconDemo : MonoBehaviour
                         var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
                         var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
                         j.SetRumble(yoteMin, yoteMax, 0.6f, 200);
+
+                        var direction = ourPosition.position.x <= opponentPosition.position.x;
+                        if (yeetDirection != direction)
+                        {
+                            yeetRotMin *= -1;
+                            yeetRotMax *= -1;
+                        }
+                        yeetDirection = direction;
 
                         yeetingPower = 0;
                     }
@@ -210,15 +218,20 @@ public class JoyconDemo : MonoBehaviour
                 var euler = rotation.eulerAngles;
                 yeetingRotationTimer += Time.deltaTime;
                 var delta = Mathf.Clamp01(yeetingRotationTimer / yeetingRotationMaxTime);
-                euler.y = Mathf.Lerp(yeetRotMin, yeetRotMax, delta);
-                rotation.eulerAngles = euler;
-                yeetingContrainerTransform.rotation = rotation;
 
                 if (delta >= 1)
                 {
                     handState = HandState.Idle;
                     yeetingRotationTimer = 0f;
+                    euler.z = 0f;
                 }
+                else
+                {
+                    euler.z = Mathf.Lerp(yeetRotMin, yeetRotMax, delta);
+                }
+
+                rotation.eulerAngles = euler;
+                yeetingContrainerTransform.rotation = rotation;
             }
 
             transform.position = position;

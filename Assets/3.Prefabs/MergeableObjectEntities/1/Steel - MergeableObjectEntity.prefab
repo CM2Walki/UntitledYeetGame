@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8476666850105846499}
   - component: {fileID: 5011250571912269721}
   - component: {fileID: 5178769026994561175}
+  - component: {fileID: 3133280580844890637}
   m_Layer: 0
   m_Name: Steel - MergeableObjectEntity
   m_TagString: Untagged
@@ -46,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35313b6b02d4a924581a95bb911db56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 0
-  Weight: 0
+  Damage: 2
+  Weight: 2
   debugText: {fileID: 3349652496807170652}
 --- !u!23 &5011250571912269721
 MeshRenderer:
@@ -95,7 +96,21 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5436480310330189060}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4068373912626513877, guid: 574bb42ac7c191d42802b77104079483, type: 3}
+--- !u!64 &3133280580844890637
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5436480310330189060}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4068373912626513877, guid: 574bb42ac7c191d42802b77104079483, type: 3}
 --- !u!1001 &4638042776778275634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -221,22 +236,22 @@ PrefabInstance:
     - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 14
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}

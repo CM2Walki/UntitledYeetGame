@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class MergeableObject : MonoBehaviour
@@ -10,11 +11,62 @@ public class MergeableObject : MonoBehaviour
     public float Weight;
     public Vector3Int VectorMaterial;
 
+    private float StartingDamage;
+    private float StartingWeight;
+    private Vector3Int StartingVectorMaterial;
+
     private static MergeableObjectManager mergeableObjectManager;
     private GameObject activeGameObject;
 
+#if UNITY_EDITOR
+    [SerializeField]
+    private Vector3Int DebugVectorMaterial;
+
+    [Button]
+    private void AddDebugVectorMaterial()
+    {
+        UpgradeObjectByAddition(DebugVectorMaterial);
+    }
+
+    [Button]
+    private void AddWood()
+    {
+        UpgradeObjectByAddition(ObjectMaterial.Wood);
+    }
+
+    [Button]
+    private void AddSteel()
+    {
+        UpgradeObjectByAddition(ObjectMaterial.Steel);
+    }
+
+    [Button]
+    private void AddFire()
+    {
+        UpgradeObjectByAddition(ObjectMaterial.Fire);
+    }
+
+    [Button]
+    private void ResetButton()
+    {
+        ResetObject();
+    }
+#endif
+
+    private void ResetObject()
+    {
+        Damage = StartingDamage;
+        Weight = StartingWeight;
+        VectorMaterial = StartingVectorMaterial;
+        UpdateModel(null, true);
+    }
+
     private void Awake()
     {
+        StartingDamage = Damage;
+        StartingWeight = Weight;
+        StartingVectorMaterial = VectorMaterial;
+
         if (mergeableObjectManager == null)
         {
             mergeableObjectManager = FindObjectOfType<MergeableObjectManager>();
@@ -22,17 +74,19 @@ public class MergeableObject : MonoBehaviour
 
         var startingGO = mergeableObjectManager.GetObjectFromMaterial(VectorMaterial);
 
-        if (startingGO != null)
-        {
-            UpdateModel(startingGO, true);
-        }
+        UpdateModel(startingGO, true);
     }
 
     private void UpdateModel(GameObject go, bool clearOld)
     {
-        if (clearOld)
+        if (clearOld && activeGameObject != null)
         {
             Destroy(activeGameObject);
+        }
+
+        if (go == null)
+        {
+            return;;
         }
 
         activeGameObject = Instantiate(go, transform);
@@ -56,11 +110,11 @@ public class MergeableObject : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                if ((ObjectMaterial) VectorMaterial[i] == ObjectMaterial.None)
+                if ((ObjectMaterial)VectorMaterial[i] == ObjectMaterial.None)
                 {
                     // Try to upgrade using a clone of the material
                     var tempVector = VectorMaterial;
-                    tempVector[i] = (int) materialToAdd;
+                    tempVector[i] = (int)materialToAdd;
                     var go = mergeableObjectManager.GetObjectFromMaterial(tempVector);
                     if (go != null)
                     {
@@ -77,32 +131,29 @@ public class MergeableObject : MonoBehaviour
         return false;
     }
 
-    public bool UpgradeObjectByAddition(Vector3Int vectorMaterial)
+    public bool UpgradeObjectByAddition(Vector3Int inputMaterial)
     {
-        if (IsUpgradeAllowed(ref vectorMaterial))
+        if (IsUpgradeAllowed(ref inputMaterial))
         {
-            var freeCount = 0;
+            Vector3Int tempVector = VectorMaterial;
             for (int i = 0; i < 3; i++)
             {
-                if ((ObjectMaterial)VectorMaterial[i] == ObjectMaterial.None)
-                {
-                    freeCount++;
-                }
-
-                if (freeCount >= CountOccupiedMaterials(ref VectorMaterial))
+                if ((ObjectMaterial) VectorMaterial[i] == ObjectMaterial.None)
                 {
                     // Try to upgrade using a clone of the material
-                    var tempVector = VectorMaterial;
-                    tempVector[i - 1] = VectorMaterial[0];
-                    tempVector[i] = VectorMaterial[1];
-                    var go = mergeableObjectManager.GetObjectFromMaterial(tempVector);
-                    if (go != null)
-                    {
-                        // Upgrade is valid
-                        VectorMaterial = tempVector;
-                        UpdateModel(go, true);
-                        return true;
-                    }
+                    tempVector[i] = inputMaterial[i];
+                }
+            }
+
+            if (VectorMaterial != tempVector)
+            {
+                var go = mergeableObjectManager.GetObjectFromMaterial(tempVector);
+                if (go != null)
+                {
+                    // Upgrade is valid
+                    VectorMaterial = tempVector;
+                    UpdateModel(go, true);
+                    return true;
                 }
             }
         }
@@ -116,7 +167,8 @@ public class MergeableObject : MonoBehaviour
 
     private bool IsUpgradeAllowed(ref Vector3Int inputMaterial)
     {
-        return CountUnOccupiedMaterials(ref VectorMaterial) >= CountOccupiedMaterials(ref inputMaterial);
+        var occupied = CountOccupiedMaterials(ref inputMaterial);
+        return occupied != 0 && CountUnOccupiedMaterials(ref VectorMaterial) >= occupied;
     }
 
     private int CountUnOccupiedMaterials(ref Vector3Int materialVector)
@@ -124,7 +176,7 @@ public class MergeableObject : MonoBehaviour
         var count = 0;
         for (int i = 0; i < 3; i++)
         {
-            if (materialVector[i] == (int) ObjectMaterial.None)
+            if (materialVector[i] == (int)ObjectMaterial.None)
             {
                 count++;
             }

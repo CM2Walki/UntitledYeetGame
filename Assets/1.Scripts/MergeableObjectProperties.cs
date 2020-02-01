@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿#define DEBUG_CLASS
+
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class MergeableObjectProperties : MonoBehaviour
 {
@@ -22,7 +25,7 @@ public class MergeableObjectProperties : MonoBehaviour
             Weight = MergeableObjectManager.DEFAULT_OBJECT_WEIGHT;
         }
 
-#if UNITY_EDITOR
+#if DEBUG_CLASS && UNITY_EDITOR
         debugText.gameObject.SetActive(true);
 #else
         debugText.gameObject.SetActive(false);

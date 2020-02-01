@@ -15,6 +15,7 @@ public class JoyconDemo : MonoBehaviour
     public Quaternion orientation;
 
     private Transform transform;
+    public float sensitivity;
 
     void Start()
     {
@@ -91,8 +92,8 @@ public class JoyconDemo : MonoBehaviour
 
             orientation = j.GetVector();
             var position = transform.position;
-            position.x += stick[0];
-            position.z += stick[1];
+            position.x += stick[0] * (sensitivity / 1000);
+            position.z += stick[1] * (sensitivity / 1000);
 
             ClampPosition(ref position);
             transform.SetPositionAndRotation(position, orientation);

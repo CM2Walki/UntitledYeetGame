@@ -279,6 +279,7 @@ MonoBehaviour:
   accel: {x: 0, y: 0, z: 0}
   jc_ind: 0
   orientation: {x: 0, y: 0, z: 0, w: 0}
+  sensitivity: 200
 --- !u!1 &250149498
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +318,7 @@ MonoBehaviour:
   accel: {x: 0, y: 0, z: 0}
   jc_ind: 1
   orientation: {x: 0, y: 0, z: 0, w: 0}
+  sensitivity: 200
 --- !u!23 &250149500
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -800,6 +802,7 @@ MonoBehaviour:
   accel: {x: 0, y: 0, z: 0}
   jc_ind: 2
   orientation: {x: 0, y: 0, z: 0, w: 0}
+  sensitivity: 0
 --- !u!23 &1092808763
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1005,6 +1008,7 @@ MonoBehaviour:
   accel: {x: 0, y: 0, z: 0}
   jc_ind: 3
   orientation: {x: 0, y: 0, z: 0, w: 0}
+  sensitivity: 0
 --- !u!23 &1383271536
 MeshRenderer:
   m_ObjectHideFlags: 0

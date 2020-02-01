@@ -92,8 +92,9 @@ public class JoyconDemo : MonoBehaviour
 
             orientation = j.GetVector();
             var position = transform.position;
-            position.x += stick[0] * (sensitivity / 1000);
-            position.z += stick[1] * (sensitivity / 1000);
+            float sensitivity = this.sensitivity / 1000;
+            position.x += stick[0] * sensitivity;
+            position.z += stick[1] * sensitivity;
 
             ClampPosition(ref position);
             transform.SetPositionAndRotation(position, orientation);

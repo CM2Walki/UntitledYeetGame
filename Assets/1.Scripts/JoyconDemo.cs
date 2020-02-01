@@ -1,11 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class JoyconDemo : MonoBehaviour
 {
+    public enum HandState
+    {
+        Idle,
+        GoingDown,
+        GoingUp,
+        Yeeting
+    }
 
     public List<Joycon> joycons;
+    public HandState handState;
 
     // Values made available via Unity
     public float[] stick;
@@ -14,14 +23,30 @@ public class JoyconDemo : MonoBehaviour
     public int jc_ind = 0;
     public Quaternion orientation;
 
+    public bool goingDown;
+    public bool goingUp;
+    public float descentSpeed = 0.05f;
+    public float ascentSpeed = 0.15f;
+
     private Transform transform;
     public float sensitivity;
+
+    public float MaxDescentPosition;
+    public float OriginalYPosition;
+    public Material material;
+    private Vector2 materialOffset;
 
     void Start()
     {
         transform = gameObject.transform;
         gyro = new Vector3(0, 0, 0);
         accel = new Vector3(0, 0, 0);
+
+        handState = HandState.Idle;
+        materialOffset = material.mainTextureOffset;
+        materialOffset.y = -0.5f;
+
+        material.mainTextureOffset = materialOffset;
 
         // get the public Joycon array attached to the JoyconManager in scene
         joycons = JoyconManager.Instance.j;
@@ -40,15 +65,15 @@ public class JoyconDemo : MonoBehaviour
             Joycon j = joycons[jc_ind];
 
             // GetButtonDown checks if a button has been pressed (not held)
-            if (j.GetButtonDown(Joycon.Button.SHOULDER_2))
-            {
-                Debug.Log("Shoulder button 2 pressed");
-                // GetStick returns a 2-element vector with x/y joystick components
-                Debug.Log(string.Format("Stick x: {0:N} Stick y: {1:N}", j.GetStick()[0], j.GetStick()[1]));
+            //if (j.GetButtonDown(Joycon.Button.SHOULDER_2))
+            //{
+            //    Debug.Log("Shoulder button 2 pressed");
+            //    // GetStick returns a 2-element vector with x/y joystick components
+            //    Debug.Log(string.Format("Stick x: {0:N} Stick y: {1:N}", j.GetStick()[0], j.GetStick()[1]));
 
-                // Joycon has no magnetometer, so it cannot accurately determine its yaw value. Joycon.Recenter allows the user to reset the yaw value.
-                j.Recenter();
-            }
+            //    // Joycon has no magnetometer, so it cannot accurately determine its yaw value. Joycon.Recenter allows the user to reset the yaw value.
+            //    j.Recenter();
+            //}
 
             if (j.GetButtonDown(Joycon.Button.DPAD_DOWN))
             {
@@ -98,8 +123,65 @@ public class JoyconDemo : MonoBehaviour
 
             ClampPosition(ref position);
 
+            if (handState == HandState.Idle && j.GetButtonDown(Joycon.Button.SHOULDER_1))
+            {
+                handState = HandState.GoingDown;
+            }
+
+            if (handState == HandState.GoingDown)
+            {
+                position.y -= descentSpeed * Time.deltaTime;
+                var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
+                materialOffset.y = Mathf.Lerp(0f, -0.5f, positionTraveled);
+                Debug.LogFormat("GoingDown: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
+                material.mainTextureOffset = materialOffset;
+
+                if (position.y <= MaxDescentPosition)
+                {
+                    position.y = MaxDescentPosition;
+                    DetectObjectCollision();
+                    handState = HandState.GoingUp;
+
+                    materialOffset.y = 0;
+                    material.mainTextureOffset = materialOffset;
+                }
+            }
+            else if (handState == HandState.GoingUp)
+            {
+                position.y += ascentSpeed * Time.deltaTime;
+                var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
+                materialOffset.y = Mathf.Lerp(0f, -0.5f, positionTraveled);
+                Debug.LogFormat("GoingUp: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
+                material.mainTextureOffset = materialOffset;
+
+                if (position.y >= OriginalYPosition)
+                {
+                    position.y = OriginalYPosition;
+                    HandleMerge();
+                    handState = HandState.Idle;
+
+                    materialOffset.y = -0.5f;
+                    material.mainTextureOffset = materialOffset;
+                }
+            }
+
             transform.position = position;
         }
+    }
+
+    private float GetTextureOffsetModifier()
+    {
+        return 1 / (Mathf.Abs(MaxDescentPosition) + Mathf.Abs(OriginalYPosition));
+    }
+
+    private void DetectObjectCollision()
+    {
+        Debug.Log("Detect object collision");
+    }
+
+    private void HandleMerge()
+    {
+        Debug.Log("Handle merge");
     }
 
     private void ClampPosition(ref Vector3 position)

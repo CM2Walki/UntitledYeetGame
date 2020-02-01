@@ -377,6 +377,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MergeableObject
       objectReference: {fileID: 0}
+    - target: {fileID: 5534317400433480113, guid: 90707225df72ffc408f256d234801b3c,
+        type: 3}
+      propertyPath: VectorMaterial.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5534317400433480118, guid: 90707225df72ffc408f256d234801b3c,
         type: 3}
       propertyPath: m_LocalPosition.x

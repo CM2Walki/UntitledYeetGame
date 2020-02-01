@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35313b6b02d4a924581a95bb911db56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 0
-  Weight: 0
+  Damage: 1
+  Weight: 1
   debugText: {fileID: 5146297934915628664}
 --- !u!23 &5011250571912269721
 MeshRenderer:

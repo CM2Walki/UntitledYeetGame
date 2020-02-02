@@ -1095,6 +1095,7 @@ GameObject:
   - component: {fileID: 1108556236}
   - component: {fileID: 1108556238}
   - component: {fileID: 1108556237}
+  - component: {fileID: 1108556239}
   m_Layer: 0
   m_Name: CloudBehind
   m_TagString: Untagged
@@ -1163,6 +1164,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108556235}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1108556239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108556235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09978dd10908e884bbeef25a0cfe8e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateRotation: 1
+  RotateSpeed: {x: 0, y: 0, z: 0}
+  WobbleAmount: {x: 0.5, y: 0.5, z: 0}
+  WobbleSpeed: {x: 4, y: 4, z: 4}
 --- !u!1 &1192257586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,6 +1191,7 @@ GameObject:
   - component: {fileID: 1192257587}
   - component: {fileID: 1192257589}
   - component: {fileID: 1192257588}
+  - component: {fileID: 1192257590}
   m_Layer: 0
   m_Name: CloudFront
   m_TagString: Untagged
@@ -1242,6 +1260,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192257586}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1192257590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192257586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09978dd10908e884bbeef25a0cfe8e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateRotation: 1
+  RotateSpeed: {x: 0, y: 0, z: 0}
+  WobbleAmount: {x: 0.5, y: 0.5, z: 0}
+  WobbleSpeed: {x: 4, y: 4, z: 4}
 --- !u!1 &1205061233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,6 +1677,7 @@ GameObject:
   - component: {fileID: 1617222514}
   - component: {fileID: 1617222516}
   - component: {fileID: 1617222515}
+  - component: {fileID: 1617222517}
   m_Layer: 0
   m_Name: CloudFront
   m_TagString: Untagged
@@ -1711,6 +1746,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617222513}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1617222517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617222513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09978dd10908e884bbeef25a0cfe8e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateRotation: 1
+  RotateSpeed: {x: 0, y: 0, z: 0}
+  WobbleAmount: {x: 0.5, y: 0.5, z: 0}
+  WobbleSpeed: {x: 4, y: 4, z: 4}
 --- !u!1 &1715200860
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1773,7 @@ GameObject:
   - component: {fileID: 1715200861}
   - component: {fileID: 1715200863}
   - component: {fileID: 1715200862}
+  - component: {fileID: 1715200864}
   m_Layer: 0
   m_Name: CloudBehind
   m_TagString: Untagged
@@ -1790,6 +1842,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715200860}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1715200864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715200860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09978dd10908e884bbeef25a0cfe8e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateRotation: 1
+  RotateSpeed: {x: 0, y: 0, z: 0}
+  WobbleAmount: {x: 0.5, y: 0.5, z: 0}
+  WobbleSpeed: {x: 4, y: 4, z: 4}
 --- !u!1 &1893765429
 GameObject:
   m_ObjectHideFlags: 0

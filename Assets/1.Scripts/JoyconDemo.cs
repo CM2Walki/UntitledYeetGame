@@ -1,6 +1,7 @@
 ﻿using RotaryHeart.Lib.PhysicsExtension;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Physics = UnityEngine.Physics;
 using Random = UnityEngine.Random;
 
@@ -64,6 +65,15 @@ public class JoyconDemo : MonoBehaviour
     public float grabbySpeedIncrement = 1.1f;
     public Transform frontCloud;
     public Transform backCloud;
+
+    [System.Serializable]
+    public class YeetEvent : UnityEvent<int>
+    {
+    }
+
+    public YeetEvent onYeetEvent;
+    private const int MAX_YEETING_POWER = 500;
+    public float yeetRotOriginal;
 
     void Start()
     {
@@ -170,8 +180,9 @@ public class JoyconDemo : MonoBehaviour
                 if (j.GetButton(Joycon.Button.SHOULDER_2))
                 {
                     yeetingPower += (oldAccel - accel).magnitude;
+                    yeetingPower = Mathf.Clamp(yeetingPower, 0, MAX_YEETING_POWER);
 
-                    var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
+                    var yeetNormalized = Mathf.Clamp01(yeetingPower / MAX_YEETING_POWER);
                     var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
                     var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
                     j.SetRumble(yoteMin, yoteMax, 0.6f);
@@ -181,7 +192,7 @@ public class JoyconDemo : MonoBehaviour
                     //Debug.LogFormat("Yoting {0}", yeetingPower);
                     handState = HandState.Yeeting;
 
-                    var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
+                    var yeetNormalized = Mathf.Clamp01(yeetingPower / MAX_YEETING_POWER);
                     var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
                     var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
                     j.SetRumble(yoteMin, yoteMax, 0.6f, 200);
@@ -193,8 +204,6 @@ public class JoyconDemo : MonoBehaviour
                         yeetRotMax *= -1;
                     }
                     yeetDirection = direction;
-
-                    yeetingPower = 0;
                 }
             }
 
@@ -256,10 +265,16 @@ public class JoyconDemo : MonoBehaviour
                 {
                     handState = HandState.Idle;
                     yeetingRotationTimer = 0f;
-                    euler.z = 0f;
+                    euler.z = yeetRotOriginal;
+                    if (onYeetEvent != null)
+                    {
+                        onYeetEvent.Invoke(Mathf.RoundToInt(currentMergeableObject.Damage * yeetingPower));
+                    }
 
                     Destroy(currentMergeableObject.gameObject);
                     currentMergeableObject = null;
+
+                    yeetingPower = 0;
                 }
                 else
                 {

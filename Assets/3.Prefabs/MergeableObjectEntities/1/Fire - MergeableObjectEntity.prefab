@@ -23,7 +23,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4748885972741543446}
   - component: {fileID: 8476666850105846499}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Fire - MergeableObjectEntity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +127,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Magic fire 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362566513136535035, guid: 18066826ac97f47ae8e7382408eb7e1d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362918873375204117, guid: 18066826ac97f47ae8e7382408eb7e1d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363429054183720449, guid: 18066826ac97f47ae8e7382408eb7e1d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18066826ac97f47ae8e7382408eb7e1d, type: 3}
@@ -263,6 +278,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MergeableObjectDebugText
+      objectReference: {fileID: 0}
+    - target: {fileID: 6005649802077953717, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}

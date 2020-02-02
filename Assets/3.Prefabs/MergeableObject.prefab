@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &505087111223533401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5678095050991651381}
+  - component: {fileID: 7982119466367926006}
+  m_Layer: 0
+  m_Name: RotationHook
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5678095050991651381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505087111223533401}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5534317400433480118}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7982119466367926006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505087111223533401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09978dd10908e884bbeef25a0cfe8e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateRotation: 0
+  RotateSpeed: {x: 1, y: 823, z: 344}
+  WobbleAmount: {x: 1, y: 1, z: 1}
+  WobbleSpeed: {x: 1, y: 1, z: 1}
 --- !u!1 &5534317400433480112
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +58,7 @@ GameObject:
   - component: {fileID: 5534317400433480118}
   - component: {fileID: 5534317400433480113}
   - component: {fileID: 945368142}
-  - component: {fileID: 8943800421393651389}
+  - component: {fileID: 4855891997723704408}
   m_Layer: 0
   m_Name: MergeableObject
   m_TagString: Untagged
@@ -29,7 +76,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5678095050991651381}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,7 +95,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 0
   Weight: 0
+  Yeetable: 0
   VectorMaterial: {x: 1, y: 0, z: 0}
+  hoverScript: {fileID: 0}
+  YeetToPosition: {fileID: 0}
   DebugVectorMaterial: {x: 0, y: 0, z: 0}
 --- !u!114 &945368142
 MonoBehaviour:
@@ -63,18 +114,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundlevel: {x: 0, y: -4.72, z: 0}
   gravity: 9.81
---- !u!114 &8943800421393651389
+--- !u!114 &4855891997723704408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5534317400433480112}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09978dd10908e884bbeef25a0cfe8e58, type: 3}
+  m_Script: {fileID: 11500000, guid: fd24d9e77d1f059458fb0bfb513a43d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotateSpeed: {x: 60, y: 60, z: 60}
-  WobbleAmount: {x: 1, y: 1, z: 1}
-  WobbleSpeed: {x: 2, y: 2, z: 2}

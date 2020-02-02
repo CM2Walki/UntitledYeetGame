@@ -268,14 +268,6 @@ public class JoyconDemo : MonoBehaviour
                     handState = HandState.Idle;
                     yeetingRotationTimer = 0f;
                     euler.z = yeetRotOriginal;
-                    if (onYeetEvent != null)
-                    {
-                        onYeetEvent.Invoke(Mathf.RoundToInt(currentMergeableObject.Damage * yeetingPower));
-                    }
-
-                    Destroy(currentMergeableObject.gameObject);
-                    currentMergeableObject = null;
-
                     yeetingPower = 0;
                 }
                 else
@@ -285,7 +277,11 @@ public class JoyconDemo : MonoBehaviour
 
                 if(delta > 0.8f && currentMergeableObject != null)
                 {
-
+                    currentMergeableObject.transform.SetParent(null);
+                    currentMergeableObject.hoverScript.UpdateRotation = true;
+                    currentMergeableObject.YeetToPosition.YeetInit(currentMergeableObject.transform.position, opponent.backCloud, 30, 0.5f);
+                    currentMergeableObject.YeetToPosition.Yeet(Mathf.RoundToInt(currentMergeableObject.Damage * yeetingPower), onYeetEvent);
+                    currentMergeableObject = null;
                 }
 
                 rotation.eulerAngles = euler;

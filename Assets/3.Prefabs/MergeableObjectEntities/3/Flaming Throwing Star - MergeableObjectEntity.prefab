@@ -104,11 +104,10 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: f71d0524afa5a9b4b85cec10faaeb27f, type: 3}
+  - {fileID: 2100000, guid: 8ec3db8b291f3d34b9a5c6b3ecd46d50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,6 +148,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4748885972741543446}
     m_Modifications:
+    - target: {fileID: 1362566513136535035, guid: 18066826ac97f47ae8e7382408eb7e1d,
+        type: 3}
+      propertyPath: m_Name
+      value: Magic fire 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1360088435747909613, guid: 18066826ac97f47ae8e7382408eb7e1d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -204,11 +208,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1362566513136535035, guid: 18066826ac97f47ae8e7382408eb7e1d,
-        type: 3}
-      propertyPath: m_Name
-      value: Magic fire 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18066826ac97f47ae8e7382408eb7e1d, type: 3}
 --- !u!4 &72382430466816088 stripped
@@ -224,6 +223,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4748885972741543446}
     m_Modifications:
+    - target: {fileID: 6005649802077953717, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_Name
+      value: MergeableObjectDebugText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2609707512328467714, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -333,36 +362,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6005649802077953717, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_Name
-      value: MergeableObjectDebugText
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c963e1cdd91701498ecff4392128226, type: 3}

@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 8fb0c689dd0980b4bae4d4b28083c852
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Gavabon
+  fontNames:
+  - Gavabon
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6920b27b0cf5ee24f9527a05933542de, type: 3}
+  - {fileID: 12800000, guid: 367083fbef2bbfc439e791ea151e2209, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

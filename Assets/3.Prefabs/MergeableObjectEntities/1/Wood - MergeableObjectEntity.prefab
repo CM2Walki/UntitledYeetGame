@@ -60,7 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 1
   Weight: 1
-  Yeetable: 0
   debugText: {fileID: 46745859434065868}
 --- !u!1001 &7964593380910417570
 PrefabInstance:
@@ -69,6 +68,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4748885972741543446}
     m_Modifications:
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2609707512328467714, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -189,31 +213,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c963e1cdd91701498ecff4392128226, type: 3}
 --- !u!224 &5381907505269339040 stripped
@@ -241,6 +240,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4748885972741543446}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: 43e8324ec9e36e2498a50507c232b7d9,
+        type: 3}
+      propertyPath: m_Name
+      value: stick 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 43e8324ec9e36e2498a50507c232b7d9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 43e8324ec9e36e2498a50507c232b7d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -311,16 +320,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.22030492
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 43e8324ec9e36e2498a50507c232b7d9,
+    - target: {fileID: -1504981713932161579, guid: 43e8324ec9e36e2498a50507c232b7d9,
         type: 3}
-      propertyPath: m_Name
-      value: stick 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 43e8324ec9e36e2498a50507c232b7d9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3bff1da66de4e2743b2c1cec25a445aa, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43e8324ec9e36e2498a50507c232b7d9, type: 3}
 --- !u!1 &919395327927768732 stripped

@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameFlowManager : MonoBehaviour
@@ -12,6 +13,10 @@ public class GameFlowManager : MonoBehaviour
     public TextMeshProUGUI player1ScoreLabel;
     public TextMeshProUGUI player2ScoreLabel;
 
+    public GameObject endOfGamePanel;
+    public TextMeshProUGUI endOfGameText;
+
+    private bool gameOver;
     public bool GameOver { get { return gameOver; } }
 
     [ShowOnly]
@@ -22,12 +27,18 @@ public class GameFlowManager : MonoBehaviour
     public int player2Score;
     [ShowOnly]
     public float refreshTimer;
-    private bool gameOver;
 
     public void Awake()
     {
         Instance = this;
         gameOver = false;
+
+        endOfGamePanel.SetActive(false);
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void AddPlayer1Score(int score)
@@ -51,6 +62,10 @@ public class GameFlowManager : MonoBehaviour
             timer = maxTime;
             refreshTimer = 0.5f; //forceRefresh;
             gameOver = true;
+
+            endOfGamePanel.SetActive(true);
+            var winnerText = player1Score > player2Score ? " Pink!" : (player2Score > player1Score ? " Green!" : "Draw?");
+            endOfGameText.text = string.Format(endOfGameText.text, winnerText, player1Score, player2Score);
         }
 
         if (refreshTimer > 0.1f)

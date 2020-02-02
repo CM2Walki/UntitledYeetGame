@@ -343,8 +343,10 @@ public class JoyconDemo : MonoBehaviour
         }
         else
         {
-            currentMergeableObject.UpgradeObjectByAddition(mergeableObject.VectorMaterial);
-            Destroy(mergeableObject.gameObject);
+            if (currentMergeableObject.UpgradeObjectByAddition(mergeableObject.VectorMaterial))
+            {
+                Destroy(mergeableObject.gameObject);
+            }
         }
     }
 

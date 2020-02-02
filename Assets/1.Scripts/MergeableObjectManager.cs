@@ -1,6 +1,6 @@
 ﻿using RotaryHeart.Lib.SerializableDictionary;
 using System;
-using Boo.Lang;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum ObjectMaterial
@@ -85,24 +85,22 @@ public class MergeableObjectManager : MonoBehaviour
     /// </summary>
     /// <param name="vectorMaterial"></param>
     /// <returns></returns>
-    public List<GameObject> SplitObjectToMaterials(Vector3Int vectorMaterial)
+    public Dictionary<Vector3Int, Vector3> SplitObjectToMaterials(Vector3Int vectorMaterial)
     {
         if (vectorMaterial.magnitude == 0)
         {
             return null;
         }
-            
-        List<GameObject> gameObjects = new List<GameObject>();
 
-        Vector3Int mat = Vector3Int.zero;
+        Dictionary<Vector3Int, Vector3> gameObjects = new Dictionary<Vector3Int, Vector3>();
 
         for (int i = 0; i < 3; i++)
         {
-            GameObject go_out;
-            mat.x = vectorMaterial[i];
-            if (objectMergeDictionary.TryGetValue(mat, out go_out))
+            Vector3Int go_out = Vector3Int.zero;
+            go_out.x = vectorMaterial[i];
+            if ((ObjectMaterial) vectorMaterial[i] != ObjectMaterial.None)
             {
-                gameObjects.Add(go_out);
+                gameObjects.Add(go_out, Vector3.zero);
             }
         }
 

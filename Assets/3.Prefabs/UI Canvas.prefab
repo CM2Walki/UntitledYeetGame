@@ -63,10 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Great yeet{0}
-
-
-    {1} Points vs {2} Points!'
+  m_text: Great Yeet{0}
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 042ae84b35ed9844c81f719eb2fbd027, type: 2}
   m_sharedMaterial: {fileID: -3906703391792738373, guid: 042ae84b35ed9844c81f719eb2fbd027,
@@ -136,12 +133,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 37735078}
-    characterCount: 40
+    characterCount: 13
     spriteCount: 0
-    spaceCount: 7
-    wordCount: 8
+    spaceCount: 1
+    wordCount: 3
     linkCount: 0
-    lineCount: 3
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -642,6 +639,8 @@ MonoBehaviour:
   player2ScoreLabel: {fileID: 7745799709230895141}
   endOfGamePanel: {fileID: 1912398708}
   endOfGameText: {fileID: 37735078}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
   timer: 0
   player1Score: 0
   player2Score: 0

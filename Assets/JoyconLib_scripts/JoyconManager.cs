@@ -29,6 +29,8 @@ public class JoyconManager : MonoBehaviour
     {
         if (instance != null) Destroy(gameObject);
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
         int i = 0;
 
         j = new List<Joycon>();

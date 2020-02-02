@@ -16,6 +16,9 @@ public class GameFlowManager : MonoBehaviour
     public GameObject endOfGamePanel;
     public TextMeshProUGUI endOfGameText;
 
+    public JoyconDemo player1;
+    public JoyconDemo player2;
+
     private bool gameOver;
     public bool GameOver { get { return gameOver; } }
 
@@ -34,11 +37,13 @@ public class GameFlowManager : MonoBehaviour
         gameOver = false;
 
         endOfGamePanel.SetActive(false);
+
+        Application.targetFrameRate = 60;
     }
 
     public void PlayAgain()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void AddPlayer1Score(int score)
@@ -64,8 +69,13 @@ public class GameFlowManager : MonoBehaviour
             gameOver = true;
 
             endOfGamePanel.SetActive(true);
-            var winnerText = player1Score > player2Score ? " Pink!" : (player2Score > player1Score ? " Green!" : "Draw?");
-            endOfGameText.text = string.Format(endOfGameText.text, winnerText, player1Score, player2Score);
+            bool player1Win = player1Score > player2Score;
+            bool player2Win = player2Score > player1Score;
+            var winnerText = player1Win ? " Green!" : player2Win ? " Pink!" : "Draw?";
+            endOfGameText.text = string.Format(endOfGameText.text, winnerText);
+
+            player1.GameOver(player1Win);
+            player2.GameOver(player2Win);
         }
 
         if (refreshTimer > 0.1f)

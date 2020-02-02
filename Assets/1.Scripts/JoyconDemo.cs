@@ -320,7 +320,6 @@ public class JoyconDemo : MonoBehaviour
     private void DetectObjectCollision()
     {
         var collisions = Physics.OverlapSphere(transform.position, 1.5f, grabbiesLayerMask);
-        Debug.Log("Detect object collision " + collisions.Length);
         DebugExtensions.DebugWireSphere(transform.position, Color.black, 1.5f, 2f);
 
         if (collisions.Length == 0)

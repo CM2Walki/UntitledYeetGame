@@ -14,7 +14,7 @@ using UnityEngine;
 public class Hover : MonoBehaviour
 {
 
-    public bool UpdateRotation = true;
+    public bool UpdateRotation = false;
 	// Public variables show up in the Inspector
 	public Vector3 RotateSpeed = new Vector3 (10.0F, 10.0F, 10.0F);
 	public Vector3 WobbleAmount = new Vector3 (0.1F, 0.1F, 0.1F);
@@ -32,7 +32,7 @@ public class Hover : MonoBehaviour
 		// https://docs.unity3d.com/ScriptReference/GameObject.GetComponent.html
 		tr = GetComponent ("Transform") as Transform;
 
-		BasePosition = tr.position;
+		BasePosition = tr.localPosition;
 
 		NoiseIndex.x = Random.value;
 		NoiseIndex.y = Random.value;
@@ -61,7 +61,7 @@ public class Hover : MonoBehaviour
 		offset.Scale (WobbleAmount);
 
 		// Set the position to the BasePosition plus the offset
-		transform.position = BasePosition + offset;
+		transform.localPosition = BasePosition + offset;
 
 		// Increment the NoiseIndex so that we get a new Noise value next time.
 		NoiseIndex += WobbleSpeed * Time.deltaTime;

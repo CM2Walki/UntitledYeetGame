@@ -17,7 +17,7 @@ public class MergeableObject : MonoBehaviour
     [ShowOnly]
     public Hover hoverScript;
     [ShowOnly] 
-    public YeetToPosition yeetToPosition;
+    public YeetToPosition YeetToPosition;
 
     private float StartingDamage;
     private float StartingWeight;
@@ -84,10 +84,10 @@ public class MergeableObject : MonoBehaviour
 
         UpdateModel(startingGO, true);
 
-        hoverScript = transform.GetComponent<Hover>();
+        hoverScript = transform.GetComponentInChildren<Hover>();
         hoverScript.UpdateRotation = false;
 
-        yeetToPosition = transform.GetComponent<YeetToPosition>();
+        YeetToPosition = transform.GetComponent<YeetToPosition>();
     }
 
     private void UpdateModel(GameObject go, bool clearOld)
@@ -102,7 +102,7 @@ public class MergeableObject : MonoBehaviour
             return; ;
         }
 
-        activeGameObject = Instantiate(go, transform);
+        activeGameObject = Instantiate(go, transform.GetChild(0));
 
         var props = activeGameObject.GetComponent<MergeableObjectProperties>();
 

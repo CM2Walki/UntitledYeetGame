@@ -12,6 +12,8 @@ public class GameFlowManager : MonoBehaviour
     public TextMeshProUGUI player1ScoreLabel;
     public TextMeshProUGUI player2ScoreLabel;
 
+    public bool GameOver { get { return gameOver; } }
+
     [ShowOnly]
     public float timer;
     [ShowOnly]
@@ -20,10 +22,12 @@ public class GameFlowManager : MonoBehaviour
     public int player2Score;
     [ShowOnly]
     public float refreshTimer;
+    private bool gameOver;
 
     public void Awake()
     {
         Instance = this;
+        gameOver = false;
     }
 
     public void AddPlayer1Score(int score)
@@ -38,8 +42,16 @@ public class GameFlowManager : MonoBehaviour
 
     public void Update()
     {
+        if (gameOver) return;
+
         refreshTimer += Time.deltaTime;
         timer += Time.deltaTime;
+        if (timer >= maxTime)
+        {
+            timer = maxTime;
+            refreshTimer = 0.5f; //forceRefresh;
+            gameOver = true;
+        }
 
         if (refreshTimer > 0.1f)
         {

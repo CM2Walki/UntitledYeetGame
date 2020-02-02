@@ -98,6 +98,8 @@ public class JoyconDemo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameFlowManager.Instance.GameOver) return;
+
         // make sure the Joycon only gets checked if attached
         if (joycons.Count > 0)
         {
@@ -281,6 +283,11 @@ public class JoyconDemo : MonoBehaviour
                     euler.z = Mathf.Lerp(yeetRotMin, yeetRotMax, delta);
                 }
 
+                if(delta > 0.8f && currentMergeableObject != null)
+                {
+
+                }
+
                 rotation.eulerAngles = euler;
                 yeetingContrainerTransform.rotation = rotation;
             }
@@ -290,6 +297,22 @@ public class JoyconDemo : MonoBehaviour
             }
 
             transform.position = position;
+        }
+    }
+
+    public void GameOver(bool winner)
+    {
+        if (joycons.Count > 0)
+        {
+            Joycon j = joycons[jc_ind];
+            if (winner)
+            {
+                j.SetRumble(80, 320, 0.6f, 200);
+            }
+            else
+            {
+                j.SetRumble(80, 160, 0.6f, 200);
+            }
         }
     }
 

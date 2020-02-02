@@ -7,6 +7,7 @@ public class MergeableObjectProperties : MonoBehaviour
 {
     public float Damage;
     public float Weight;
+    public bool Yeetable = true;
 
     public TextMeshPro debugText;
 

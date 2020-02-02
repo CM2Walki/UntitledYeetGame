@@ -9,6 +9,8 @@ public class MergeableObject : MonoBehaviour
     public float Damage;
     [ShowOnly]
     public float Weight;
+    [ShowOnly]
+    public bool Yeetable;
     public Vector3Int VectorMaterial;
 
     private float StartingDamage;
@@ -86,7 +88,7 @@ public class MergeableObject : MonoBehaviour
 
         if (go == null)
         {
-            return;;
+            return; ;
         }
 
         activeGameObject = Instantiate(go, transform);
@@ -95,6 +97,7 @@ public class MergeableObject : MonoBehaviour
 
         Damage += props.Damage;
         Weight += props.Weight;
+        Yeetable = props.Yeetable;
 
 #if UNITY_EDITOR
         var x = ((ObjectMaterial)VectorMaterial.x).ToString();
@@ -143,7 +146,7 @@ public class MergeableObject : MonoBehaviour
             Vector3Int tempVector = VectorMaterial;
             for (int i = 0; i < 3; i++)
             {
-                UpgradeObjectByAddition((ObjectMaterial) inputMaterial[i]);
+                UpgradeObjectByAddition((ObjectMaterial)inputMaterial[i]);
             }
 
             if (VectorMaterial != tempVector)

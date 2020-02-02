@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 2
   Weight: 2
+  Yeetable: 0
   debugText: {fileID: 3349652496807170652}
 --- !u!23 &5011250571912269721
 MeshRenderer:

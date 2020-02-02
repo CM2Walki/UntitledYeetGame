@@ -37,7 +37,10 @@ public class JoyconDemo : MonoBehaviour
     public Material material;
     private Vector2 materialOffset;
 
-    public bool holdingSomethingYeetable = true;
+    public bool holdingSomethingYeetable
+    {
+        get { return currentMergeableObject != null && currentMergeableObject.Yeetable; }
+    }
     public float yeetingPower = 0f;
 
     public float yeetRotMin;
@@ -254,6 +257,9 @@ public class JoyconDemo : MonoBehaviour
                     handState = HandState.Idle;
                     yeetingRotationTimer = 0f;
                     euler.z = 0f;
+
+                    Destroy(currentMergeableObject.gameObject);
+                    currentMergeableObject = null;
                 }
                 else
                 {

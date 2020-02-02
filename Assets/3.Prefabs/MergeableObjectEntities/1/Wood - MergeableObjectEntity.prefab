@@ -60,6 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 1
   Weight: 1
+  Yeetable: 0
   debugText: {fileID: 46745859434065868}
 --- !u!1001 &7964593380910417570
 PrefabInstance:

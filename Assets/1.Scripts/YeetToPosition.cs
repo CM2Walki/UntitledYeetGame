@@ -87,7 +87,7 @@ public class YeetToPosition : MonoBehaviour
         var mergeObject = GetComponent<MergeableObject>();
         var dict = MergeableObjectManager.SplitObjectToMaterials(mergeObject.VectorMaterial);
 
-        PrefabGridScript.GenerateRandomPositions(ref dict, 5, transform.position);
+        PrefabGridScript.GenerateRandomPositions(ref dict, 10, transform.position);
         PrefabGridScript.SpawnObjectsInGrid(ref dict);
     }
 }

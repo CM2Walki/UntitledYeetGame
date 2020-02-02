@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35313b6b02d4a924581a95bb911db56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 0
+  Damage: 3
   Weight: 0
   Yeetable: 1
   debugText: {fileID: 3349652496807170652}

@@ -1,9 +1,10 @@
-﻿using RotaryHeart.Lib.PhysicsExtension;
+﻿//#define KEYBOARD_MODE
+
+using RotaryHeart.Lib.PhysicsExtension;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Physics = UnityEngine.Physics;
-using Random = UnityEngine.Random;
 
 public class JoyconDemo : MonoBehaviour
 {
@@ -65,6 +66,11 @@ public class JoyconDemo : MonoBehaviour
     public float grabbySpeedIncrement = 1.1f;
     public Transform frontCloud;
     public Transform backCloud;
+    private Joycon.Button holdingButton = Joycon.Button.CAPTURE;
+
+    [ShowOnly]
+    public float startPressTime = 0f;
+    private float holdDurationRequirement = 0.3f;
 
     private Hover hover1;
     private Hover hover2;
@@ -109,6 +115,7 @@ public class JoyconDemo : MonoBehaviour
     {
         if (GameFlowManager.Instance.GameOver) return;
 
+#if !KEYBOARD_MODE
         // make sure the Joycon only gets checked if attached
         if (joycons.Count > 0)
         {
@@ -179,19 +186,44 @@ public class JoyconDemo : MonoBehaviour
 
             if (handState == HandState.Idle)
             {
-                if (j.GetButtonDown(Joycon.Button.SHOULDER_1))
+                if (j.GetButtonDown(Joycon.Button.SHOULDER_2))
                 {
-                    handState = HandState.GoingDown;
+                    holdingButton = Joycon.Button.SHOULDER_2;
+                    startPressTime = Time.time;
                 }
-                else if (holdingSomethingYeetable && j.GetButtonDown(Joycon.Button.SHOULDER_2))
+                else if (j.GetButtonDown(Joycon.Button.STICK))
                 {
-                    handState = HandState.ChargingYeet;
+                    holdingButton = Joycon.Button.STICK;
+                    startPressTime = Time.time;
+
                 }
+                else if (holdingButton != Joycon.Button.CAPTURE)
+                {
+                    if (j.GetButtonUp(holdingButton))
+                    {
+                        holdingButton = Joycon.Button.CAPTURE;
+                        handState = HandState.GoingDown;
+                        startPressTime = 0;
+                    }
+                    else if (holdingSomethingYeetable && Time.time - startPressTime > holdDurationRequirement)
+                    {
+                        handState = HandState.ChargingYeet;
+                        startPressTime = 0;
+                    }
+                }
+                //if (j.GetButton(Joycon.Button.SHOULDER_1))
+                //{
+                //    handState = HandState.GoingDown;
+                //}
+                //else if (holdingSomethingYeetable && j.GetButton(Joycon.Button.SHOULDER_2))
+                //{
+                //    handState = HandState.ChargingYeet;
+                //}
             }
 
             if (handState == HandState.ChargingYeet)
             {
-                if (j.GetButton(Joycon.Button.SHOULDER_2))
+                if (j.GetButton(holdingButton))
                 {
                     yeetingPower += (oldAccel - accel).magnitude;
                     yeetingPower = Mathf.Clamp(yeetingPower, 0, MAX_YEETING_POWER);
@@ -201,8 +233,10 @@ public class JoyconDemo : MonoBehaviour
                     var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
                     j.SetRumble(yoteMin, yoteMax, 0.6f);
                 }
-                else if (j.GetButtonUp(Joycon.Button.SHOULDER_2))
+                else if (j.GetButtonUp(holdingButton))
                 {
+                    holdingButton = Joycon.Button.CAPTURE;
+
                     //Debug.LogFormat("Yoting {0}", yeetingPower);
                     handState = HandState.Yeeting;
 
@@ -309,7 +343,8 @@ public class JoyconDemo : MonoBehaviour
 
             transform.position = position;
         }
-#if UNITY_EDITOR
+#endif
+#if UNITY_EDITOR && KEYBOARD_MODE
         else
         {
             var position = transform.position;

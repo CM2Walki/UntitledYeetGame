@@ -174,6 +174,9 @@ public class JoyconDemo : MonoBehaviour
 
             ClampPosition(ref position);
 
+            hover1.UpdateRotation = false;
+            hover2.UpdateRotation = false;
+
             if (handState == HandState.Idle)
             {
                 if (j.GetButtonDown(Joycon.Button.SHOULDER_1))
@@ -300,6 +303,8 @@ public class JoyconDemo : MonoBehaviour
             }
             else if (handState == HandState.ChargingYeet)
             {
+                hover1.UpdateRotation = true;
+                hover2.UpdateRotation = true;
             }
 
             transform.position = position;

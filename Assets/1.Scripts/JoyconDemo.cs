@@ -357,7 +357,7 @@ public class JoyconDemo : MonoBehaviour
         }
     }
 
-    private void ClampPosition(ref Vector3 position)
+    public static void ClampPosition(ref Vector3 position)
     {
         position.x = Mathf.Clamp(position.x, -13f, 13f);
         position.z = Mathf.Clamp(position.z, -13f, 13f);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum ObjectMaterial
 {
@@ -85,22 +86,29 @@ public class MergeableObjectManager : MonoBehaviour
     /// </summary>
     /// <param name="vectorMaterial"></param>
     /// <returns></returns>
-    public Dictionary<Vector3Int, Vector3> SplitObjectToMaterials(Vector3Int vectorMaterial)
+    public static Dictionary<Vector3, Vector3Int> SplitObjectToMaterials(Vector3Int vectorMaterial)
     {
         if (vectorMaterial.magnitude == 0)
         {
             return null;
         }
 
-        Dictionary<Vector3Int, Vector3> gameObjects = new Dictionary<Vector3Int, Vector3>();
+        Dictionary<Vector3, Vector3Int> gameObjects = new Dictionary<Vector3, Vector3Int>();
 
         for (int i = 0; i < 3; i++)
         {
             Vector3Int go_out = Vector3Int.zero;
             go_out.x = vectorMaterial[i];
+
             if ((ObjectMaterial) vectorMaterial[i] != ObjectMaterial.None)
             {
-                gameObjects.Add(go_out, Vector3.zero);
+                var position = Random.insideUnitSphere * 20000;
+
+                while (gameObjects.ContainsKey(position))
+                {
+                    position = Random.insideUnitSphere * 20000;
+                }
+                gameObjects.Add(position, go_out);
             }
         }
 

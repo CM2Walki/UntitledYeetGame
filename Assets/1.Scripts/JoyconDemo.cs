@@ -71,6 +71,9 @@ public class JoyconDemo : MonoBehaviour
     public float startPressTime = 0f;
     private float holdDurationRequirement = 0.3f;
 
+    private Hover hover1;
+    private Hover hover2;
+
     [System.Serializable]
     public class YeetEvent : UnityEvent<int>
     {
@@ -92,12 +95,18 @@ public class JoyconDemo : MonoBehaviour
 
         material.mainTextureOffset = materialOffset;
 
+        hover1 = frontCloud.GetComponent<Hover>();
+        hover2 = backCloud.GetComponent<Hover>();
+
+        hover1.UpdateRotation = false;
+        hover2.UpdateRotation = false;
+
         // get the public Joycon array attached to the JoyconManager in scene
-        joycons = JoyconManager.Instance.j;
-        if (joycons.Count < jc_ind + 1)
-        {
-            Destroy(gameObject);
-        }
+        //joycons = JoyconManager.Instance.j;
+        //if (joycons.Count < jc_ind + 1)
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     // Update is called once per frame
@@ -169,6 +178,9 @@ public class JoyconDemo : MonoBehaviour
             position.z += stick[1] * sensitivity;
 
             ClampPosition(ref position);
+
+            hover1.UpdateRotation = false;
+            hover2.UpdateRotation = false;
 
             if (handState == HandState.Idle)
             {
@@ -323,11 +335,155 @@ public class JoyconDemo : MonoBehaviour
             }
             else if (handState == HandState.ChargingYeet)
             {
-
+                hover1.UpdateRotation = true;
+                hover2.UpdateRotation = true;
             }
 
             transform.position = position;
         }
+#if UNITY_EDITOR
+        else
+        {
+            var position = transform.position;
+            float sensitivity = this.sensitivity / 1000;
+            position.x += Input.GetAxis("Horizontal") * sensitivity;
+            position.z += Input.GetAxis("Vertical") * sensitivity;
+
+            ClampPosition(ref position);
+
+            hover1.UpdateRotation = false;
+            hover2.UpdateRotation = false;
+
+            if (handState == HandState.Idle)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftControl))
+                {
+                    handState = HandState.GoingDown;
+                }
+                else if (holdingSomethingYeetable && Input.GetKeyDown(KeyCode.Space))
+                {
+                    handState = HandState.ChargingYeet;
+                }
+            }
+
+            if (handState == HandState.ChargingYeet)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    yeetingPower += (oldAccel - accel).magnitude;
+                    yeetingPower = Mathf.Clamp(yeetingPower, 0, MAX_YEETING_POWER);
+
+                    var yeetNormalized = Mathf.Clamp01(yeetingPower / MAX_YEETING_POWER);
+                    var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
+                    var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
+                }
+                else if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    //Debug.LogFormat("Yoting {0}", yeetingPower);
+                    handState = HandState.Yeeting;
+
+                    var yeetNormalized = Mathf.Clamp01(yeetingPower / MAX_YEETING_POWER);
+                    var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
+                    var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
+
+                    var direction = ourPosition.position.x <= opponentPosition.position.x;
+                    if (yeetDirection != direction)
+                    {
+                        yeetRotMin *= -1;
+                        yeetRotMax *= -1;
+                    }
+                    yeetDirection = direction;
+                }
+            }
+
+            if (handState == HandState.GoingDown)
+            {
+                position.y -= descentSpeed * Time.deltaTime;
+
+                var grabbyPointPosition = grabbyPoint.localPosition;
+                grabbyPointPosition.y -= descentSpeed * grabbySpeedIncrement * Time.deltaTime;
+                grabbyPoint.localPosition = grabbyPointPosition;
+
+                var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
+                materialOffset.y = GetTextureOffsetModifier(positionTraveled);
+                //Debug.LogFormat("GoingDown: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
+                material.mainTextureOffset = materialOffset;
+
+                if (position.y <= MaxDescentPosition)
+                {
+                    position.y = MaxDescentPosition;
+                    DetectObjectCollision();
+                    handState = HandState.GoingUp;
+
+                    materialOffset.y = 0;
+                    material.mainTextureOffset = materialOffset;
+                }
+            }
+            else if (handState == HandState.GoingUp)
+            {
+                position.y += ascentSpeed * Time.deltaTime;
+
+                var grabbyPointPosition = grabbyPoint.localPosition;
+                grabbyPointPosition.y += ascentSpeed * grabbySpeedIncrement * Time.deltaTime;
+
+                var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
+                materialOffset.y = GetTextureOffsetModifier(positionTraveled);
+                //Debug.LogFormat("GoingUp: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
+                material.mainTextureOffset = materialOffset;
+
+                if (position.y >= OriginalYPosition)
+                {
+                    position.y = OriginalYPosition;
+                    handState = HandState.Idle;
+
+                    materialOffset.y = -0.5f;
+                    material.mainTextureOffset = materialOffset;
+                    grabbyPointPosition.y = grabbyYOriginalPoint;
+                }
+
+                grabbyPoint.localPosition = grabbyPointPosition;
+            }
+            else if (handState == HandState.Yeeting)
+            {
+                var rotation = yeetingContrainerTransform.rotation;
+                var euler = rotation.eulerAngles;
+                yeetingRotationTimer += Time.deltaTime;
+                var delta = Mathf.Clamp01(yeetingRotationTimer / yeetingRotationMaxTime);
+
+                if (delta >= 1)
+                {
+                    handState = HandState.Idle;
+                    yeetingRotationTimer = 0f;
+                    euler.z = yeetRotOriginal;
+                    yeetingPower = 0;
+                }
+                else
+                {
+                    euler.z = Mathf.Lerp(yeetRotMin, yeetRotMax, delta);
+                }
+
+                if (delta > 0.8f && currentMergeableObject != null)
+                {
+                    currentMergeableObject.transform.SetParent(null);
+                    currentMergeableObject.hoverScript.UpdateRotation = true;
+                    currentMergeableObject.YeetToPosition.YeetInit(currentMergeableObject.transform.position, opponent.backCloud, 30, 0.5f);
+                    currentMergeableObject.YeetToPosition.Yeet(Mathf.RoundToInt(currentMergeableObject.Damage * yeetingPower), onYeetEvent);
+                    currentMergeableObject = null;
+                }
+
+                rotation.eulerAngles = euler;
+                yeetingContrainerTransform.rotation = rotation;
+            }
+            else if (handState == HandState.ChargingYeet)
+            {
+                hover1.UpdateRotation = true;
+                hover2.UpdateRotation = true;
+            }
+
+            transform.position = position;
+        }
+#endif
+
     }
 
     public void GameOver(bool winner)

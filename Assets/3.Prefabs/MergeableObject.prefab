@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundlevel: {x: 0, y: -4.72, z: 0}
-  gravity: 9.81
+  gravity: 30
 --- !u!114 &4855891997723704408
 MonoBehaviour:
   m_ObjectHideFlags: 0

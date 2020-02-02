@@ -11,7 +11,7 @@ public class PrefabGridScript : MonoBehaviour
         int spacing = 8;
         int rowspacing = 8;
         int linebreakAfterSteps = 6;
-        Vector3Int gridPos = new Vector3Int(spacing, 0, spacing);
+        Vector3 gridPos = new Vector3(spacing + transform.position.x, transform.position.y, spacing + transform.position.z);
 
         int step = 0;
 
@@ -21,10 +21,11 @@ public class PrefabGridScript : MonoBehaviour
             if (step == linebreakAfterSteps)
             {
                 step = 0;
-                gridPos = new Vector3Int(0, 0, gridPos.z + rowspacing);
+                gridPos = new Vector3(transform.position.x, transform.position.y, gridPos.z + rowspacing);
             }
-            gridPos = new Vector3Int(gridPos.x + spacing, gridPos.y, gridPos.z);
             var obj = Instantiate(mergeableObjectManager.baseMergeableObjectPrefab, gridPos, Quaternion.identity);
+            gridPos = new Vector3(gridPos.x + spacing, gridPos.y, gridPos.z);
+
             var mergeObj = obj.GetComponent<MergeableObject>();
             mergeObj.UpgradeObjectByOverride(vec3.Key);
         }

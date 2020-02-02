@@ -269,13 +269,15 @@ public class JoyconDemo : MonoBehaviour
                     yeetingRotationTimer = 0f;
                     euler.z = yeetRotOriginal;
                     yeetingPower = 0;
+
+                    AudioManager.Instance.PlayYeet();
                 }
                 else
                 {
                     euler.z = Mathf.Lerp(yeetRotMin, yeetRotMax, delta);
                 }
 
-                if(delta > 0.8f && currentMergeableObject != null)
+                if (delta > 0.8f && currentMergeableObject != null)
                 {
                     currentMergeableObject.transform.SetParent(null);
                     currentMergeableObject.hoverScript.UpdateRotation = true;
@@ -338,13 +340,19 @@ public class JoyconDemo : MonoBehaviour
             collisions[0].enabled = false;
             mergeableObject.GetComponent<FakeGravity>().enabled = false;
 
+            AudioManager.Instance.PlayCombineSuccess();
             //Close hands
         }
         else
         {
             if (currentMergeableObject.UpgradeObjectByAddition(mergeableObject.VectorMaterial))
             {
+                AudioManager.Instance.PlayCombineSuccess();
                 Destroy(mergeableObject.gameObject);
+            }
+            else
+            {
+                AudioManager.Instance.PlayCombineFail();
             }
         }
     }

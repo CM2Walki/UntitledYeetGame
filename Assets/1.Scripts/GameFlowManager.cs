@@ -39,6 +39,8 @@ public class GameFlowManager : MonoBehaviour
 
         endOfGamePanel.SetActive(false);
 
+        AudioManager.Instance.PlayIngame();
+
         Application.targetFrameRate = 60;
     }
 
@@ -50,11 +52,13 @@ public class GameFlowManager : MonoBehaviour
     public void AddPlayer1Score(int score)
     {
         player1Score += score;
+        AudioManager.Instance.PlayHitPink();
     }
 
     public void AddPlayer2Score(int score)
     {
         player2Score += score;
+        AudioManager.Instance.PlayHitGreen();
     }
 
     public void Update()
@@ -77,6 +81,8 @@ public class GameFlowManager : MonoBehaviour
 
             player1.GameOver(player1Win);
             player2.GameOver(player2Win);
+
+            AudioManager.Instance.PlayEndOfGame();
         }
 
         if (refreshTimer > 0.1f)

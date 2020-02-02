@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using RotaryHeart.Lib.PhysicsExtension;
+using System.Collections.Generic;
 using UnityEngine;
+using Physics = UnityEngine.Physics;
 using Random = UnityEngine.Random;
 
 public class JoyconDemo : MonoBehaviour
@@ -9,6 +11,7 @@ public class JoyconDemo : MonoBehaviour
         Idle,
         GoingDown,
         GoingUp,
+        ChargingYeet,
         Yeeting,
     }
 
@@ -46,7 +49,18 @@ public class JoyconDemo : MonoBehaviour
     public float yeetingRotationTimer;
 
     public Transform ourPosition;
+
+    public JoyconDemo opponent;
     public Transform opponentPosition;
+    public LayerMask grabbiesLayerMask;
+
+    public Transform grabbyPoint;
+    private MergeableObject currentMergeableObject = null;
+    public float grabbyYOriginalPoint;
+
+    public float grabbySpeedIncrement = 1.1f;
+    public Transform frontCloud;
+    public Transform backCloud;
 
     void Start()
     {
@@ -87,37 +101,37 @@ public class JoyconDemo : MonoBehaviour
             //    j.Recenter();
             //}
 
-            if (j.GetButtonDown(Joycon.Button.DPAD_DOWN))
-            {
-                Debug.Log("Rumble");
+            //if (j.GetButtonDown(Joycon.Button.DPAD_DOWN))
+            //{
+            //    Debug.Log("Rumble");
 
-                // Rumble for 200 milliseconds, with low frequency rumble at 160 Hz and high frequency rumble at 320 Hz. For more information check:
-                // https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering/blob/master/rumble_data_table.md
+            //    // Rumble for 200 milliseconds, with low frequency rumble at 160 Hz and high frequency rumble at 320 Hz. For more information check:
+            //    // https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering/blob/master/rumble_data_table.md
 
-                j.SetRumble(160, 320, 0.6f, 200);
+            //    j.SetRumble(160, 320, 0.6f, 200);
 
-                // The last argument (time) in SetRumble is optional. Call it with three arguments to turn it on without telling it when to turn off.
-                // (Useful for dynamically changing rumble values.)
-                // Then call SetRumble(0,0,0) when you want to turn it off.
-            }
+            //    // The last argument (time) in SetRumble is optional. Call it with three arguments to turn it on without telling it when to turn off.
+            //    // (Useful for dynamically changing rumble values.)
+            //    // Then call SetRumble(0,0,0) when you want to turn it off.
+            //}
 
-            if (j.GetButtonDown(Joycon.Button.DPAD_LEFT))
-            {
-                Debug.Log("Rumble");
+            //if (j.GetButtonDown(Joycon.Button.DPAD_LEFT))
+            //{
+            //    Debug.Log("Rumble");
 
-                // Rumble for 200 milliseconds, with low frequency rumble at 160 Hz and high frequency rumble at 320 Hz. For more information check:
-                // https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering/blob/master/rumble_data_table.md
+            //    // Rumble for 200 milliseconds, with low frequency rumble at 160 Hz and high frequency rumble at 320 Hz. For more information check:
+            //    // https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering/blob/master/rumble_data_table.md
 
-                int low_freq = Random.Range(100, 150);
-                int high_freq = Random.Range(320, 500);
-                float amp = Random.Range(0.5f, 1f);
-                int time = Random.Range(100, 500);
-                j.SetRumble(low_freq, high_freq, amp, time);
+            //    int low_freq = Random.Range(100, 150);
+            //    int high_freq = Random.Range(320, 500);
+            //    float amp = Random.Range(0.5f, 1f);
+            //    int time = Random.Range(100, 500);
+            //    j.SetRumble(low_freq, high_freq, amp, time);
 
-                // The last argument (time) in SetRumble is optional. Call it with three arguments to turn it on without telling it when to turn off.
-                // (Useful for dynamically changing rumble values.)
-                // Then call SetRumble(0,0,0) when you want to turn it off.
-            }
+            //    // The last argument (time) in SetRumble is optional. Call it with three arguments to turn it on without telling it when to turn off.
+            //    // (Useful for dynamically changing rumble values.)
+            //    // Then call SetRumble(0,0,0) when you want to turn it off.
+            //}
 
             stick = j.GetStick();
 
@@ -142,43 +156,53 @@ public class JoyconDemo : MonoBehaviour
                 {
                     handState = HandState.GoingDown;
                 }
-                else if (holdingSomethingYeetable)
+                else if (holdingSomethingYeetable && j.GetButtonDown(Joycon.Button.SHOULDER_2))
                 {
-                    if (j.GetButton(Joycon.Button.SHOULDER_2))
+                    handState = HandState.ChargingYeet;
+                }
+            }
+
+            if (handState == HandState.ChargingYeet)
+            {
+                if (j.GetButton(Joycon.Button.SHOULDER_2))
+                {
+                    yeetingPower += (oldAccel - accel).magnitude;
+
+                    var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
+                    var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
+                    var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
+                    j.SetRumble(yoteMin, yoteMax, 0.6f);
+                }
+                else if (j.GetButtonUp(Joycon.Button.SHOULDER_2))
+                {
+                    //Debug.LogFormat("Yoting {0}", yeetingPower);
+                    handState = HandState.Yeeting;
+
+                    var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
+                    var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
+                    var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
+                    j.SetRumble(yoteMin, yoteMax, 0.6f, 200);
+
+                    var direction = ourPosition.position.x <= opponentPosition.position.x;
+                    if (yeetDirection != direction)
                     {
-                        yeetingPower += (oldAccel - accel).magnitude;
-
-                        var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
-                        var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
-                        var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
-                        j.SetRumble(yoteMin, yoteMax, 0.6f);
+                        yeetRotMin *= -1;
+                        yeetRotMax *= -1;
                     }
-                    else if (j.GetButtonUp(Joycon.Button.SHOULDER_2) && yeetingPower >= 0)
-                    {
-                        //Debug.LogFormat("Yoting {0}", yeetingPower);
-                        handState = HandState.Yeeting;
+                    yeetDirection = direction;
 
-                        var yeetNormalized = Mathf.Clamp01(yeetingPower / 500);
-                        var yoteMax = Mathf.Lerp(80, 320, yeetNormalized);
-                        var yoteMin = Mathf.Lerp(80, 160, yeetNormalized);
-                        j.SetRumble(yoteMin, yoteMax, 0.6f, 200);
-
-                        var direction = ourPosition.position.x <= opponentPosition.position.x;
-                        if (yeetDirection != direction)
-                        {
-                            yeetRotMin *= -1;
-                            yeetRotMax *= -1;
-                        }
-                        yeetDirection = direction;
-
-                        yeetingPower = 0;
-                    }
+                    yeetingPower = 0;
                 }
             }
 
             if (handState == HandState.GoingDown)
             {
                 position.y -= descentSpeed * Time.deltaTime;
+
+                var grabbyPointPosition = grabbyPoint.localPosition;
+                grabbyPointPosition.y -= descentSpeed * grabbySpeedIncrement * Time.deltaTime;
+                grabbyPoint.localPosition = grabbyPointPosition;
+
                 var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
                 materialOffset.y = GetTextureOffsetModifier(positionTraveled);
                 //Debug.LogFormat("GoingDown: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
@@ -197,6 +221,10 @@ public class JoyconDemo : MonoBehaviour
             else if (handState == HandState.GoingUp)
             {
                 position.y += ascentSpeed * Time.deltaTime;
+
+                var grabbyPointPosition = grabbyPoint.localPosition;
+                grabbyPointPosition.y += ascentSpeed * grabbySpeedIncrement * Time.deltaTime;
+
                 var positionTraveled = Mathf.InverseLerp(MaxDescentPosition, OriginalYPosition, position.y);
                 materialOffset.y = GetTextureOffsetModifier(positionTraveled);
                 //Debug.LogFormat("GoingUp: Position Traveled = {0} => Mat offset = {1}", positionTraveled, materialOffset.y);
@@ -205,12 +233,14 @@ public class JoyconDemo : MonoBehaviour
                 if (position.y >= OriginalYPosition)
                 {
                     position.y = OriginalYPosition;
-                    HandleMerge();
                     handState = HandState.Idle;
 
                     materialOffset.y = -0.5f;
                     material.mainTextureOffset = materialOffset;
+                    grabbyPointPosition.y = grabbyYOriginalPoint;
                 }
+
+                grabbyPoint.localPosition = grabbyPointPosition;
             }
             else if (handState == HandState.Yeeting)
             {
@@ -233,6 +263,10 @@ public class JoyconDemo : MonoBehaviour
                 rotation.eulerAngles = euler;
                 yeetingContrainerTransform.rotation = rotation;
             }
+            else if (handState == HandState.ChargingYeet)
+            {
+
+            }
 
             transform.position = position;
         }
@@ -245,12 +279,33 @@ public class JoyconDemo : MonoBehaviour
 
     private void DetectObjectCollision()
     {
-        Debug.Log("Detect object collision");
-    }
+        var collisions = Physics.OverlapSphere(transform.position, 1.5f, grabbiesLayerMask);
+        Debug.Log("Detect object collision " + collisions.Length);
+        DebugExtensions.DebugWireSphere(transform.position, Color.black, 1.5f, 2f);
 
-    private void HandleMerge()
-    {
-        Debug.Log("Handle merge");
+        if (collisions.Length == 0)
+        {
+            return;
+        }
+
+        var mergeableObject = collisions[0].GetComponentInParent<MergeableObject>();
+        if (currentMergeableObject == null)
+        {
+            currentMergeableObject = mergeableObject;
+            mergeableObject.transform.SetParent(grabbyPoint);
+            mergeableObject.transform.localPosition = Vector3.zero;
+            mergeableObject.transform.localRotation = Quaternion.identity;
+            mergeableObject.transform.localScale = Vector3.one;
+            collisions[0].enabled = false;
+            mergeableObject.GetComponent<FakeGravity>().enabled = false;
+
+            //Close hands
+        }
+        else
+        {
+            currentMergeableObject.UpgradeObjectByAddition(mergeableObject.VectorMaterial);
+            Destroy(mergeableObject.gameObject);
+        }
     }
 
     private void ClampPosition(ref Vector3 position)

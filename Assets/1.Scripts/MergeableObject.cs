@@ -13,6 +13,12 @@ public class MergeableObject : MonoBehaviour
     public bool Yeetable;
     public Vector3Int VectorMaterial;
 
+    [HorizontalLine(color: EColor.Blue)]
+    [ShowOnly]
+    public Hover hoverScript;
+    [ShowOnly] 
+    public YeetToPosition yeetToPosition;
+
     private float StartingDamage;
     private float StartingWeight;
     private Vector3Int StartingVectorMaterial;
@@ -77,6 +83,11 @@ public class MergeableObject : MonoBehaviour
         var startingGO = mergeableObjectManager.GetObjectFromMaterial(VectorMaterial);
 
         UpdateModel(startingGO, true);
+
+        hoverScript = transform.GetComponent<Hover>();
+        hoverScript.UpdateRotation = false;
+
+        yeetToPosition = transform.GetComponent<YeetToPosition>();
     }
 
     private void UpdateModel(GameObject go, bool clearOld)

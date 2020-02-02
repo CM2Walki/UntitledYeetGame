@@ -556,6 +556,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2420925496339287354, guid: e248946c7f2ef784191e93bd10d02317,
+        type: 3}
+      propertyPath: objectMergeDictionary.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2420925496339287354, guid: e248946c7f2ef784191e93bd10d02317,
+        type: 3}
+      propertyPath: objectMergeDictionary.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2420925496339287355, guid: e248946c7f2ef784191e93bd10d02317,
         type: 3}
       propertyPath: m_Name

@@ -18,6 +18,7 @@ public class GameFlowManager : MonoBehaviour
 
     public JoyconDemo player1;
     public JoyconDemo player2;
+    public GameObject pow;
 
     private bool gameOver;
     public bool GameOver { get { return gameOver; } }

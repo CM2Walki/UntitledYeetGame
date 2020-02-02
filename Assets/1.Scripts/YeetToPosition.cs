@@ -23,6 +23,7 @@ public class YeetToPosition : MonoBehaviour
 
     private bool fireAndForget;
     private float offset;
+
     public void YeetInit(Vector3 start, Transform end, float s, float poffset = 0, bool forget = true)
     {
         startMarker = start;
@@ -69,6 +70,11 @@ public class YeetToPosition : MonoBehaviour
             {
                 finalStateEvent.Invoke(points);
             }
+
+            var powPosition = transform.position;
+            powPosition.z -= 2f;
+            Instantiate(GameFlowManager.Instance.pow, powPosition, Quaternion.identity);
+
             Destroy(gameObject);
         }
     }

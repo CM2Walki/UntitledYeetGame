@@ -641,6 +641,7 @@ MonoBehaviour:
   endOfGameText: {fileID: 37735078}
   player1: {fileID: 0}
   player2: {fileID: 0}
+  pow: {fileID: 4074095845546587667, guid: 94617ce8230440240aee431b54a43b38, type: 3}
   timer: 0
   player1Score: 0
   player2Score: 0

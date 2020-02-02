@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PrefabGridScript : MonoBehaviour
 {
-    MergeableObjectManager mergeableObjectManager;
+    private static MergeableObjectManager mergeableObjectManager;
 
     void Start()
     {
@@ -15,11 +15,11 @@ public class PrefabGridScript : MonoBehaviour
         Dictionary<Vector3, Vector3Int> startingObjects = new Dictionary<Vector3, Vector3Int>();
 
         GenerateMaterials(ref startingObjects, 15, false);
-        GenerateRandomPositions(ref startingObjects, 15, Vector3.zero);
+        GenerateRandomPositions(ref startingObjects, 20, Vector3.zero);
         SpawnObjectsInGrid(ref startingObjects);
     }
 
-    private void SpawnObjectsInGrid(ref Dictionary<Vector3, Vector3Int> objectDict)
+    public static void SpawnObjectsInGrid(ref Dictionary<Vector3, Vector3Int> objectDict)
     {
         foreach (var vec in objectDict)
         {
@@ -29,7 +29,7 @@ public class PrefabGridScript : MonoBehaviour
         }
     }
 
-    private void GenerateMaterials(ref Dictionary<Vector3, Vector3Int> dictionary, int count, bool random = false)
+    public static void GenerateMaterials(ref Dictionary<Vector3, Vector3Int> dictionary, int count, bool random = false)
     {
         if (random)
         {
@@ -50,6 +50,7 @@ public class PrefabGridScript : MonoBehaviour
             int curMat = 1;
             for (int i = 0; i < count; i++)
             {
+                // Fill position with junk
                 var position = Random.insideUnitSphere * 20000;
                 while (dictionary.ContainsKey(position))
                 {
@@ -65,15 +66,18 @@ public class PrefabGridScript : MonoBehaviour
         }
     }
 
-    private void GenerateRandomPositions(ref Dictionary<Vector3, Vector3Int> dictionary, float radius, Vector3 rootPosition)
+    public static void GenerateRandomPositions(ref Dictionary<Vector3, Vector3Int> dictionary, float radius, Vector3 rootPosition)
     {
         foreach (var key in dictionary.Keys.ToList())
         {
             var position = rootPosition + Random.insideUnitSphere * radius;
 
+            JoyconDemo.ClampPosition(ref position);
+
             while (dictionary.ContainsKey(position))
             {
                 position = rootPosition + Random.insideUnitSphere * radius;
+                JoyconDemo.ClampPosition(ref position);
             }
 
             Debug.DrawLine(position, position * 1.1f, Color.cyan, 999999f);

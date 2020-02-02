@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5534317400433480118}
   - component: {fileID: 5534317400433480113}
   - component: {fileID: 945368142}
+  - component: {fileID: 8943800421393651389}
   m_Layer: 0
   m_Name: MergeableObject
   m_TagString: Untagged
@@ -60,5 +61,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e000393633931147b0e8e0976148fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundlevel: {x: 0, y: -4.67, z: 0}
+  groundlevel: {x: 0, y: -4.8, z: 0}
   gravity: 9.81
+--- !u!114 &8943800421393651389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5534317400433480112}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09978dd10908e884bbeef25a0cfe8e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotateSpeed: {x: 60, y: 60, z: 60}
+  WobbleAmount: {x: 1, y: 1, z: 1}
+  WobbleSpeed: {x: 2, y: 2, z: 2}

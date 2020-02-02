@@ -106,6 +106,11 @@ public class MergeableObject : MonoBehaviour
 
     public bool UpgradeObjectByAddition(ObjectMaterial materialToAdd)
     {
+        if (materialToAdd == ObjectMaterial.None)
+        {
+            return false;
+        }
+
         if (IsUpgradeAllowed(materialToAdd))
         {
             for (int i = 0; i < 3; i++)
@@ -138,20 +143,15 @@ public class MergeableObject : MonoBehaviour
             Vector3Int tempVector = VectorMaterial;
             for (int i = 0; i < 3; i++)
             {
-                if ((ObjectMaterial) VectorMaterial[i] == ObjectMaterial.None)
-                {
-                    // Try to upgrade using a clone of the material
-                    tempVector[i] = inputMaterial[i];
-                }
+                UpgradeObjectByAddition((ObjectMaterial) inputMaterial[i]);
             }
 
             if (VectorMaterial != tempVector)
             {
-                var go = mergeableObjectManager.GetObjectFromMaterial(tempVector);
+                var go = mergeableObjectManager.GetObjectFromMaterial(VectorMaterial);
                 if (go != null)
                 {
                     // Upgrade is valid
-                    VectorMaterial = tempVector;
                     UpdateModel(go, true);
                     return true;
                 }

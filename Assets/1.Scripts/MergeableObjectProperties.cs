@@ -1,4 +1,4 @@
-﻿#define DEBUG_CLASS
+﻿//#define DEBUG_CLASS
 
 using System.Collections;
 using System.Collections.Generic;

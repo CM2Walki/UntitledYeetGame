@@ -11,8 +11,10 @@ using UnityEngine;
  **/
 
 
-public class Hover : MonoBehaviour {
+public class Hover : MonoBehaviour
+{
 
+    public bool UpdateRotation = true;
 	// Public variables show up in the Inspector
 	public Vector3 RotateSpeed = new Vector3 (10.0F, 10.0F, 10.0F);
 	public Vector3 WobbleAmount = new Vector3 (0.1F, 0.1F, 0.1F);
@@ -38,7 +40,10 @@ public class Hover : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        if (!UpdateRotation)
+            return;
 
 		// 1. ROTATE
 		// Rotate the cube by RotateSpeed, multiplied by the fraction of a second that has passed.

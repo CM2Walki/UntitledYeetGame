@@ -11,6 +11,9 @@ public class MergeableObject : MonoBehaviour
     public float Weight;
     public Vector3Int VectorMaterial;
 
+    [HorizontalLine(color: EColor.Blue)] 
+    public Hover hoverScript;
+
     private float StartingDamage;
     private float StartingWeight;
     private Vector3Int StartingVectorMaterial;
@@ -75,6 +78,9 @@ public class MergeableObject : MonoBehaviour
         var startingGO = mergeableObjectManager.GetObjectFromMaterial(VectorMaterial);
 
         UpdateModel(startingGO, true);
+
+        hoverScript = transform.GetComponent<Hover>();
+        hoverScript.UpdateRotation = false;
     }
 
     private void UpdateModel(GameObject go, bool clearOld)

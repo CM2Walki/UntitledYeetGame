@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e000393633931147b0e8e0976148fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundlevel: {x: 0, y: -4.8, z: 0}
+  groundlevel: {x: 0, y: -4.72, z: 0}
   gravity: 9.81
 --- !u!114 &8943800421393651389
 MonoBehaviour:

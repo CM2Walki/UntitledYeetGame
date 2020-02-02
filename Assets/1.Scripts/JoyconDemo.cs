@@ -1,9 +1,10 @@
-﻿using RotaryHeart.Lib.PhysicsExtension;
+﻿//#define KEYBOARD_MODE
+
+using RotaryHeart.Lib.PhysicsExtension;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Physics = UnityEngine.Physics;
-using Random = UnityEngine.Random;
 
 public class JoyconDemo : MonoBehaviour
 {
@@ -114,6 +115,7 @@ public class JoyconDemo : MonoBehaviour
     {
         if (GameFlowManager.Instance.GameOver) return;
 
+#if !KEYBOARD_MODE
         // make sure the Joycon only gets checked if attached
         if (joycons.Count > 0)
         {
@@ -341,7 +343,8 @@ public class JoyconDemo : MonoBehaviour
 
             transform.position = position;
         }
-#if UNITY_EDITOR
+#endif
+#if UNITY_EDITOR && KEYBOARD_MODE
         else
         {
             var position = transform.position;

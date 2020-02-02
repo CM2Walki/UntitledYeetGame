@@ -50,7 +50,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 1
+      isExpanded: 0
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 1
+    isExpanded: 0
     _keyValues:
     - {x: 1, y: 0, z: 0}
     - {x: 2, y: 0, z: 0}
@@ -162,3 +162,5 @@ MonoBehaviour:
     - {fileID: 5436480310330189060, guid: a0bba1c1a0f1d924b8f5a1cefc705189, type: 3}
     - {fileID: 5436480310330189060, guid: a0bba1c1a0f1d924b8f5a1cefc705189, type: 3}
     - {fileID: 5436480310330189060, guid: 0c98c856067f0274091c73ac7abd1b88, type: 3}
+  baseMergeableObjectPrefab: {fileID: 5534317400433480112, guid: 90707225df72ffc408f256d234801b3c,
+    type: 3}

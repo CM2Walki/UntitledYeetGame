@@ -22,6 +22,8 @@ public class MergeableObjectManager : MonoBehaviour
     public static readonly float DEFAULT_OBJECT_DAMAGE = 1;
     public static readonly float DEFAULT_OBJECT_WEIGHT = 1;
 
+    public GameObject baseMergeableObjectPrefab;
+
     void Start()
     {
         if (objectMergeDictionary.Count == 0)

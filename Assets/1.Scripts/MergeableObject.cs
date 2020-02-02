@@ -160,6 +160,19 @@ public class MergeableObject : MonoBehaviour
         return false;
     }
 
+    public bool UpgradeObjectByOverride(Vector3Int inputMaterial)
+    {
+        var go = mergeableObjectManager.GetObjectFromMaterial(inputMaterial);
+        if (go != null)
+        {
+            // Upgrade is valid
+            VectorMaterial = inputMaterial;
+            UpdateModel(go, true);
+            return true;
+        }
+        return false;
+    }
+
     private bool IsUpgradeAllowed(ObjectMaterial materialToAdd)
     {
         return CountUnOccupiedMaterials(ref VectorMaterial) >= 1;

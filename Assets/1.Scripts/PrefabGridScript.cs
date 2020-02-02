@@ -14,7 +14,7 @@ public class PrefabGridScript : MonoBehaviour
 
         Dictionary<Vector3, Vector3Int> startingObjects = new Dictionary<Vector3, Vector3Int>();
 
-        GenerateMaterials(ref startingObjects, 15, true);
+        GenerateMaterials(ref startingObjects, 15, false);
         GenerateRandomPositions(ref startingObjects, 15, Vector3.zero);
         SpawnObjectsInGrid(ref startingObjects);
     }
@@ -46,7 +46,6 @@ public class PrefabGridScript : MonoBehaviour
         else
         {
             int totalofeach = Mathf.CeilToInt(count / 3);
-            count = totalofeach;
 
             int curMat = 1;
             for (int i = 0; i < count; i++)

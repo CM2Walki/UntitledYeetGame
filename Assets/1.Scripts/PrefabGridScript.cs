@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 
 public class PrefabGridScript : MonoBehaviour
@@ -14,9 +12,16 @@ public class PrefabGridScript : MonoBehaviour
 
         Dictionary<Vector3, Vector3Int> startingObjects = new Dictionary<Vector3, Vector3Int>();
 
-        GenerateMaterials(ref startingObjects, 15, false);
-        GenerateRandomPositions(ref startingObjects, 20, Vector3.zero);
-        SpawnObjectsInGrid(ref startingObjects);
+        if (JoyconManager.Instance != null)
+        {
+            GenerateMaterials(ref startingObjects, 15, false);
+            GenerateRandomPositions(ref startingObjects, 20, Vector3.zero);
+            SpawnObjectsInGrid(ref startingObjects);
+        }
+        else
+        {
+            SpawnAll();
+        }
     }
 
     public static void SpawnObjectsInGrid(ref Dictionary<Vector3, Vector3Int> objectDict)

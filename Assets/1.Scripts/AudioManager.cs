@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
     public AudioClip[] Yeet;
     public AudioClip Ingame;
-    public AudioClip EndOfGame;
+    //public AudioClip EndOfGame;
     public AudioClip CombineSucces;
     public AudioClip CombineFail;
     public AudioClip HitPink;
@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayEndOfGame()
     {
-        audioSource.clip = EndOfGame;
-        audioSource.Play();
+        //audioSource.clip = EndOfGame;
+        //audioSource.Play();
     }
 }

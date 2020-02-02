@@ -50,7 +50,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 0
+      isExpanded: 1
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 0
+    isExpanded: 1
     _keyValues:
     - {x: 1, y: 0, z: 0}
     - {x: 2, y: 0, z: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
     - {fileID: 5436480310330189060, guid: 8dca9cf5db7d66042a61ab5cb7d1d379, type: 3}
     - {fileID: 5436480310330189060, guid: e2def9c183f592e4fb25982274306053, type: 3}
     - {fileID: 5436480310330189060, guid: 29f21a1db88fe7b4f8402ac36e184990, type: 3}
-    - {fileID: 5436480310330189060, guid: 34ab04699a91bb449b43edae6b7fae57, type: 3}
+    - {fileID: 5436480310330189060, guid: a7e0fdb1d1c52f44f8ae06e8d4996ceb, type: 3}
     - {fileID: 5436480310330189060, guid: 29f21a1db88fe7b4f8402ac36e184990, type: 3}
     - {fileID: 5436480310330189060, guid: b2610c24855c17445988d9d3c326f6b8, type: 3}
     - {fileID: 5436480310330189060, guid: db03e0426f369cd44915f9173a112c66, type: 3}

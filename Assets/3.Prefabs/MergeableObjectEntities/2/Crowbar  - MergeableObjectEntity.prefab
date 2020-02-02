@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 0
   Weight: 0
+  Yeetable: 1
   debugText: {fileID: 2132463951308997028}
 --- !u!65 &3664335560395353872
 BoxCollider:
@@ -138,16 +139,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 4.954695
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: fa86bc4136653594ebc9d865b53ecf62,
-        type: 3}
-      propertyPath: m_Name
-      value: crowbar
-      objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: fa86bc4136653594ebc9d865b53ecf62,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8ec3db8b291f3d34b9a5c6b3ecd46d50, type: 2}
+    - target: {fileID: -1504981713932161579, guid: fa86bc4136653594ebc9d865b53ecf62,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: fa86bc4136653594ebc9d865b53ecf62,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: fa86bc4136653594ebc9d865b53ecf62,
+        type: 3}
+      propertyPath: m_Name
+      value: crowbar
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa86bc4136653594ebc9d865b53ecf62, type: 3}
 --- !u!1 &6288470342136730104 stripped
@@ -169,31 +180,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4748885972741543446}
     m_Modifications:
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2609707512328467714, guid: 9c963e1cdd91701498ecff4392128226,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -308,6 +294,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MergeableObjectDebugText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935897143357630830, guid: 9c963e1cdd91701498ecff4392128226,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c963e1cdd91701498ecff4392128226, type: 3}
